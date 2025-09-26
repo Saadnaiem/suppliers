@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mom & Baby Supplier Evaluation - Al Habib Pharmacy</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        html {
+            font-size: 112.5%; /* Increases base font size to 18px from 16px */
+        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* Lighter gray */
+            background-color: #f8fafc;
         }
         .card {
             background-color: white;
@@ -17,7 +22,7 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
         }
         .btn-primary {
-            background-color: #059669; /* Green to match the theme */
+            background-color: #059669;
             color: white;
             transition: all 0.3s ease-in-out;
             transform: translateY(0);
@@ -32,7 +37,6 @@
             appearance: none;
             width: 100%;
             height: 8px;
-            /* background is now set by JavaScript */
             border-radius: 5px;
             outline: none;
             transition: background 0.1s ease-in-out;
@@ -42,7 +46,7 @@
             appearance: none;
             width: 24px;
             height: 24px;
-            background: #059669; /* Green thumb */
+            background: #059669;
             cursor: pointer;
             border-radius: 50%;
             border: 4px solid white;
@@ -58,40 +62,29 @@
         .modal-gradient {
             background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
         }
-        .section-fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .section-fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
     </style>
 </head>
 <body class="antialiased text-gray-800">
 
-    <!-- Header -->
     <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
+    <div class="mx-auto max-w-5xl px-6 sm:px-8 lg:px-12">
+            <div class="flex items-center justify-between h-24">
                 <div class="flex-shrink-0">
-                     <img src="https://alhabibpharmacy.com/static/images/new-logo@text.svg" alt="Al Habib Pharmacy Logo" class="h-10 sm:h-12 mr-4" onerror="this.onerror=null;this.src='https://placehold.co/150x50?text=Al+Habib+Pharmacy';">
+                     <img src="https://alhabibpharmacy.com/static/images/new-logo@text.svg" alt="Al Habib Pharmacy Logo" class="h-12 sm:h-16 mr-4" onerror="this.onerror=null;this.src='https://placehold.co/180x60?text=Al+Habib+Pharmacy';">
                 </div>
                 <div class="text-right">
-                    <p class="text-sm sm:text-base font-bold text-green-700 uppercase">MOM AND BABY DIVISION</p>
-                    <p class="text-xs sm:text-sm text-gray-500">BABY NUTRITION DEPARTMENT</p>
+                    <p class="text-base sm:text-lg md:text-xl font-extrabold text-green-700 uppercase tracking-wide">MOM AND BABY DIVISION</p>
+                    <p class="text-sm sm:text-base md:text-lg text-gray-600 font-medium">BABY NUTRITION DEPARTMENT</p>
                 </div>
             </div>
         </div>
     </header>
 
-    <div class="container mx-auto p-4 sm:p-6 lg:px-8 max-w-5xl">
+    <div class="mx-auto max-w-5xl px-6 sm:px-8 lg:px-12 py-4 sm:py-6">
         
-        <!-- Hero Section -->
-        <section id="hero" class="text-center my-8 md:my-12 section-fade-in">
+        <section id="hero" class="text-center my-8 md:my-12">
             <div class="w-full h-64 sm:h-80 rounded-2xl mb-8 shadow-2xl flex items-center justify-center bg-gradient-to-r from-green-500 to-green-700 p-4">
-                <h1 class="text-white text-5xl sm:text-6xl md:text-8xl font-extrabold tracking-tight uppercase" style="text-shadow: 3px 3px 10px rgba(0,0,0,0.2);">
+                <h1 class="text-white text-5xl sm:text-6xl md:text-8xl font-extrabold tracking-tight uppercase whitespace-nowrap" style="text-shadow: 3px 3px 10px rgba(0,0,0,0.2);">
                     Baby Nutrition
                 </h1>
             </div>
@@ -100,8 +93,7 @@
             <p class="text-lg md:text-xl font-bold text-green-700 max-w-3xl mx-auto mt-2">“Driving Growth Through Partnership”</p>
         </section>
 
-        <!-- Vision and Mission Section -->
-        <section id="commitment" class="card p-6 sm:p-8 my-12 section-fade-in">
+        <section id="commitment" class="card p-6 sm:p-8 my-12">
             <h3 class="text-2xl md:text-3xl font-bold text-gray-700 mb-6 border-b pb-4 flex items-center">
                 <svg class="w-8 h-8 mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m0 18a9 9 0 009-9m-9 9a9 9 0 00-9-9"></path></svg>
                 Our Commitment
@@ -118,80 +110,159 @@
             </div>
         </section>
 
-        <!-- Supplier Information Form -->
-        <section id="information" class="card p-6 sm:p-8 my-12 section-fade-in">
-            <h3 class="text-2xl md:text-3xl font-bold text-gray-700 mb-6 border-b pb-4 flex items-center">
-                <svg class="w-8 h-8 mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                1. Supplier Information
-            </h3>
-            <form id="evaluation-form" action="https://formsubmit.co/saad.naiem@gmail.com" method="POST">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="supplier-name" class="block text-sm font-medium text-gray-600 mb-1">Supplier Name</label>
-                    <input type="text" id="supplier-name" name="Supplier Name" placeholder="Enter supplier name" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
+        <form id="evaluation-form" action="https://formsubmit.co/saad.naiem@gmail.com" method="POST">
+            <section id="information" class="card p-6 sm:p-8 my-12">
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-700 mb-6 border-b pb-4 flex items-center">
+                    <svg class="w-8 h-8 mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    1. Supplier Information
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="supplier-name" class="block text-sm font-medium text-gray-600 mb-1">Supplier Name</label>
+                        <input type="text" id="supplier-name" name="Supplier Name" placeholder="Enter supplier name" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
+                    </div>
+                    <div>
+                        <label for="product-name" class="block text-sm font-medium text-gray-600 mb-1">Product Name / Brand</label>
+                        <input type="text" id="product-name" name="Product Name / Brand" placeholder="Enter product or brand name" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
+                    </div>
+                    <div>
+                        <label for="rep-name" class="block text-sm font-medium text-gray-600 mb-1">Representative Name</label>
+                        <input type="text" id="rep-name" name="Representative Name" placeholder="Enter representative's name" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
+                    </div>
+                    <div>
+                        <label for="rep-position" class="block text-sm font-medium text-gray-600 mb-1">Representative Position</label>
+                        <input type="text" id="rep-position" name="Representative Position" placeholder="Enter representative's position" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-600 mb-1">Phone</label>
+                        <input type="tel" id="phone" name="Phone" placeholder="Enter phone number" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-600 mb-1">Email</label>
+                        <input type="email" id="email" name="Email" placeholder="Enter email address" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="eval-date" class="block text-sm font-medium text-gray-600 mb-1">Evaluation Date</label>
+                        <input type="date" id="eval-date" name="Evaluation Date" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
+                    </div>
                 </div>
-                <div>
-                    <label for="product-name" class="block text-sm font-medium text-gray-600 mb-1">Product Name / Brand</label>
-                    <input type="text" id="product-name" name="Product Name / Brand" placeholder="Enter product or brand name" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
-                </div>
-                <div>
-                    <label for="rep-name" class="block text-sm font-medium text-gray-600 mb-1">Representative Name</label>
-                    <input type="text" id="rep-name" name="Representative Name" placeholder="Enter representative's name" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
-                </div>
-                <div>
-                    <label for="rep-position" class="block text-sm font-medium text-gray-600 mb-1">Representative Position</label>
-                    <input type="text" id="rep-position" name="Representative Position" placeholder="Enter representative's position" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
-                </div>
-                <div class="md:col-span-2">
-                    <label for="eval-date" class="block text-sm font-medium text-gray-600 mb-1">Evaluation Date</label>
-                    <input type="date" id="eval-date" name="Evaluation Date" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Evaluation Form -->
-        <main id="evaluation" class="card p-6 sm:p-8 my-12 section-fade-in">
-            <h3 class="text-2xl md:text-3xl font-bold text-gray-700 mb-2 flex items-center">
-                 <svg class="w-8 h-8 mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M12 8h.01M15 8h.01M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"></path></svg>
-                2. Evaluation Criteria
-            </h3>
-            <p class="text-gray-500 mb-8 ml-11">To build a powerful partnership, please rate your willingness to support each of the following criteria on a scale of 1 to 10.</p>
+            </section>
             
-            <div id="evaluation-criteria" class="space-y-6"></div>
-            
-            <!-- Hidden fields for form submission -->
-            <input type="hidden" name="Evaluation Summary" id="evaluation-summary-input">
-
-            <!-- Submit Button -->
-            <div class="mt-10 pt-6 border-t border-gray-200 text-center">
+            <main id="evaluation" class="card p-6 sm:p-8 my-12">
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-700 mb-2 flex items-center">
+                     <svg class="w-8 h-8 mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M12 8h.01M15 8h.01M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"></path></svg>
+                    2. Evaluation Criteria
+                </h3>
+                <p class="text-gray-500 mb-8 ml-11">To build a powerful partnership, please rate your willingness to support each of the following criteria on a scale of 1 to 10.</p>
+                
+                <div id="evaluation-criteria" class="space-y-6"></div>
+                
                 <input type="hidden" name="_subject" value="New Supplier Evaluation Submission!">
-                <input type="hidden" name="Final Score" id="final-score-input">
-                <button type="submit" id="submit-btn" class="btn-primary font-bold py-4 px-12 text-lg rounded-full shadow-lg">
-                    Submit Evaluation
-                </button>
-            </div>
-        </main>
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="Evaluation Summary" id="evaluation-summary-input">
+                <input type="hidden" name="Submission Time (Saudi Arabia)" id="submission-time-input">
+
+                <div class="mt-10 pt-6 border-t border-gray-200 text-center">
+                    <button type="button" id="submit-btn" class="btn-primary font-bold py-4 px-12 text-lg rounded-full shadow-lg">
+                        Calculate Score & Download Report
+                    </button>
+                </div>
+            </main>
         </form>
         
-        <footer class="text-center mt-10 text-gray-400 text-sm section-fade-in">
+        <footer class="text-center mt-10 text-gray-400 text-sm">
             <p>&copy; Al Habib Pharmacy. All Rights Reserved.</p>
             <p>Mom & Baby Division | Baby Nutrition Department</p>
         </footer>
     </div>
 
+    <div id="results-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none">
+        <div id="modal-content" class="modal-gradient rounded-2xl shadow-2xl p-8 max-w-md w-full text-center transform scale-95 transition-all duration-300">
+            <div id="modal-icon" class="mx-auto mb-4 h-20 w-20"></div>
+            <h2 id="modal-title" class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Evaluation Complete!</h2>
+            <p class="text-gray-500 mb-4">Your final collaboration score is:</p>
+            <p id="modal-score" class="text-6xl sm:text-7xl font-extrabold mb-4"></p>
+            <div class="w-full bg-white/50 rounded-full h-5 mb-4 shadow-inner">
+                <div id="modal-progress-bar" class="bg-gradient-to-r from-green-400 to-emerald-600 h-5 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+            </div>
+            <p id="modal-message" class="text-lg font-medium text-gray-600 mb-6"></p>
+            <button id="close-modal-btn" class="bg-white text-gray-700 font-bold py-2 px-6 rounded-full hover:bg-gray-100 transition shadow-md">Close</button>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const { jsPDF } = window.jspdf;
+            
             const criteria = [
                 { id: 'promo', text: 'Willingness for Promotional Activities & Trade Support', weight: 25, explanation: 'Rate your willingness to support high-impact promotions, provide strong financial backing, and develop strategies to increase overall category sales.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-2.236 9.168-5.584C18.35 0 18.68 0 19 0v12a5.002 5.002 0 01-5 5h-1.064M15 17l-4 4" /></svg>` },
                 { id: 'marketing', text: 'Willingness for Marketing Support (In-store & Online)', weight: 20, explanation: 'Assess your willingness to support engaging in-store displays, drive digital traffic to our platforms, and execute effective shopper education campaigns.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>` },
                 { id: 'sales', text: 'Commitment to Category Growth & Profitability', weight: 25, explanation: 'Evaluate your commitment to our mutual growth by proposing strategies for strong sales, healthy profit margins, and a consistent positive year-over-year trend.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-3.75-.625m3.75.625V3.375" /></svg>` },
-                { id: 'partnership', text: 'Willingness for Partnership & Long-term Relationship', weight: 15, explanation: 'Gauge your willingness to engage in collaborative business planning, share data openly, and align with our long-term strategic goals for a true partnership.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21a6 6 0 00-9-5.197m0 0A4.995 4.995 0 0012 12.5a4.995 4.995 0 00-3-1.354M12 12.5a4 4 0 110-5.292" /></svg>` },
+                { id: 'partnership', text: 'Willingness for Partnership & Long-term Relationship', weight: 15, explanation: 'Rate your willingness to engage in collaborative business planning, share data openly, and align with our long-term strategic goals for a true partnership.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21a6 6 0 00-9-5.197m0 0A4.995 4.995 0 0012 12.5a4.995 4.995 0 00-3-1.354M12 12.5a4 4 0 110-5.292" /></svg>` },
                 { id: 'innovation', text: 'Commitment to Innovation & FTM Launches', weight: 10, explanation: 'Score your willingness to offer a pipeline of impactful new products and provide us with exclusive or first-to-market advantages that excite customers.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311l-3.75 0m3.75-7.478c.097-.57.097-1.156 0-1.726m0 0c.298-.678.648-1.32 1.04-1.908m-1.04 1.908c-.392-.588-.742-1.23-.1.04-1.908M12 18.75v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311l-3.75 0" /></svg>` },
                 { id: 'supply', text: 'Commitment to Supply Reliability (SLAs)', weight: 5, explanation: 'Rate your commitment to achieving operational excellence by consistently meeting delivery timelines, ensuring order accuracy, and preventing out-of-stock situations.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l2-2h8a1 1 0 001-1zM21 12v-2a1 1 0 00-1-1h-4a1 1 0 00-1 1v2m0 0h-4a2 2 0 00-2 2v2a2 2 0 002 2h4a2 2 0 002-2v-2z" /></svg>` }
             ];
 
+            const supportTiers = {
+                strategic: {
+                    title: "Strategic Partner Support Tier",
+                    points: [
+                        "Prime placement in physical stores (high priority, premium locations).",
+                        "Prime placement on e-commerce platform (featured positions, homepage exposure).",
+                        "Featured in-store display (custom displays, premium placement).",
+                        "Full network access to stores.",
+                        "Exclusive first access to category launches.",
+                        "Full analytics reports on performance insights.",
+                        "Fast-track fulfillment and priority supply chain support.",
+                        "Exclusive invitations to collaboration workshops & planning sessions.",
+                        "Full participation access to seasonal campaigns.",
+                        "Continuous review & support for category upgrades."
+                    ],
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-blue-500" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>`
+                },
+                preferred: {
+                    title: "Preferred Partner Support Tier",
+                    points: [
+                        "Prime placement in selected high-traffic stores.",
+                        "Category page exposure on e-commerce platform.",
+                        "Standard in-store displays.",
+                        "Access to major stores in the network.",
+                        "Included in some category launches.",
+                        "Summary reports on performance insights.",
+                        "Priority supply chain support over Developing Partners.",
+                        "Open invitations to category workshops.",
+                        "Access to selected seasonal campaigns.",
+                        "Potential for upgrade based on performance."
+                    ],
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-green-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>`
+                },
+                developing: {
+                    title: "Developing Partner Support Tier",
+                    points: [
+                        "Placement in limited locations.",
+                        "Placement on limited category pages on e-commerce.",
+                        "Limited in-store displays.",
+                        "Access to a limited selection of stores.",
+                        "Inclusion in category launches upon request.",
+                        "Basic reports on performance insights.",
+                        "Limited invitations to collaboration workshops.",
+                        "Potential for upgrade based on improvement."
+                    ],
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-yellow-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10.394 2.08a1 1 0 00-1.788 0l-7 14a1 1 0 00.894 1.42h14a1 1 0 00.894-1.42l-7-14zM9 4h2v6H9V4zm0 8h2v2H9v-2z" /></svg>`
+                },
+                potential: {
+                    title: "Potential Partner - Path to Growth",
+                    points: [
+                        "Thank you for your interest in partnering with us.",
+                        "Based on this evaluation, we have identified areas for future collaboration.",
+                        "We will schedule a follow-up meeting to discuss key objectives and a potential path to becoming a Developing Partner.",
+                        "We are committed to exploring how we can grow together."
+                    ],
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-gray-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>`
+                }
+            };
+
             const criteriaContainer = document.getElementById('evaluation-criteria');
-            
             criteria.forEach(item => {
                 const criterionHTML = `
                     <div class="p-4 rounded-lg hover:bg-gray-50/50 transition-colors border border-gray-200">
@@ -225,30 +296,21 @@
             function calculateTotalScore() {
                 let totalScore = 0;
                 sliders.forEach(slider => {
-                    const value = parseInt(slider.value);
-                    const weight = parseInt(slider.dataset.weight);
-                    totalScore += (value / 10) * weight;
+                    totalScore += (parseInt(slider.value) / 10) * parseInt(slider.dataset.weight);
                 });
                 return totalScore;
             }
 
             function updateSliderFill(slider) {
-                const value = slider.value;
-                const min = slider.min || 1;
-                const max = slider.max || 10;
-                const percentage = ((value - min) / (max - min)) * 100;
-                const darkGreen = '#047857';
-                const lightGreen = '#dcfce7';
-                slider.style.background = `linear-gradient(to right, ${darkGreen} ${percentage}%, ${lightGreen} ${percentage}%)`;
+                const percentage = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+                slider.style.background = `linear-gradient(to right, #047857 ${percentage}%, #dcfce7 ${percentage}%)`;
             }
 
             function updateScores() {
                 sliders.forEach(slider => {
                     const id = slider.id.replace('-rate', '');
-                    const value = parseInt(slider.value);
-                    document.getElementById(`${id}-value`).textContent = value;
-                    const weight = parseInt(slider.dataset.weight);
-                    const weightedScore = (value / 10) * weight;
+                    document.getElementById(`${id}-value`).textContent = slider.value;
+                    const weightedScore = (slider.value / 10) * slider.dataset.weight;
                     document.getElementById(`${id}-score`).textContent = weightedScore.toFixed(2);
                     updateSliderFill(slider);
                 });
@@ -256,40 +318,353 @@
             
             sliders.forEach(slider => {
                 slider.addEventListener('input', updateScores);
+                updateSliderFill(slider);
             });
+            updateScores();
 
-            updateScores(); // Initial call to set scores and slider fills on load
+            const submitBtn = document.getElementById('submit-btn');
+            const modal = document.getElementById('results-modal');
+            const closeModalBtn = document.getElementById('close-modal-btn');
 
-            // Form submission logic
-            const form = document.getElementById('evaluation-form');
-            form.addEventListener('submit', function(event) {
-                // Calculate the final score
+            const alHabibLogoBase64 = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxuczppbmtzY2FwZT0iaHR0cDovL3d3dy5pbmtzY2FwZS5vcmcvbmFtZXNwYWNlcy9pbmtzY2FwZSIgdmVyc2lvbj0iMS4xIiB3aWR0aD0iMTkyNy41NiIgaGVpZ2h0PSI0MjUuMTk3IiB2aWV3Qm94PSIwIDAgMTkyNy41NiA0MjUuMTk3Ij4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcF8wIj4KPHBhdGggdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsLTEsMCw0MjUuMTk3KSIgZD0iTTAgNDI1LjE5N0gxOTI3LjU1OVYwSDBaIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPGcgaW5rc2NhcGU6Z3JvdXBtb2RlPSJsYXllciIgaW5rc2NhcGU6bGFiZWw9IkxheWVyIDEiPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcF8wKSI+CjxwYXRoIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLC0xLDE4MTQuNTc5MSw2NC4yMjMzOSkiIGQ9Ik0wIDBDLS42MjEuNjI1LS0xLjIzMiAxLjI0Mi0xLjg0OCAxLjg2MS0uOTY3IDMuMjQ3LjIyMyA1LjczMyAxLjYgNC41ODUgMy4zNzEgMy4xIDEuMTU2IDEuMzc2IDAgMCIgZmlsbD0iI2UyZWRlMSIvPgo8cGF0aCB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwtMSwxNjk5Ljk1NiwzOTYuNTE2MykiIGQ9Ik0wIDBILTE0MC4xMDJD LTE2Ni42ODggMC0xODMuMjk5IDE2LjcwNy0xODMuMzYzIDQzLjg4My0xODMuNDczIDk3LjYzNy0xODMuMzkzIDE1MS4zNTUtMTgzLjM5MyAyMDUuMDk4Qy0xODMuMzkzIDI0NC4wODUtMTgzLjQwOCAyODMuMDc5LTE4My4zOTMgMzIyLjA3My0xODMuMzcxIDM1MS40NTMtMTY3LjA0OSAzNjguMTM0LTEzOC4yMTkgMzY4LjE0NUMtNDUuNzk1IDM2OC4xNjcgNDYuNjI1IDM2OC4xNjcgMTM5LjA1MyAzNjguMTQ1QzE2OC45MTQgMzY4LjEzNCAxODQuOTI4IDM1MS43NTkgMTg0LjkyOCAzMjEuMjY5QzE4NC45MzggMjI5LjU0OSAxODQuNjY0IDEzNy44MjQgMTg1LjA4MiA0Ni4wOTZDMTg1LjIxNSAxNi4wMTggMTY1LjE5NS0uOTM5IDEzOS4zNjktLjMxOEM5Mi45MzIuODA1IDQ2LjQ2NyAwIDAgMCIgZmlsbD0iIzI0N2UzOCIvPgo8cGF0aCB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwtMSwxNTczLjgxOTMsMzY4Ljc1NjYpIiBkPSJNMCAwQzcuMjMgMTkuODM2IDE3LjY2MiAzNy40ODIgMjkuMzg3IDU0LjM1NyA1MS4yOTcgODUuOTQxIDc5LjE3NCAxMTEuNDE2IDEwOS4xNDYgMTM0Ljc0NiAxNDMuMTA1IDE2MS4xNzQgMTc2Ljk4NCAxODcuNjUzIDIwNS4zMjYgMjIwLjYyNCAyMjUuNDUzIDI0NC4wMzIgMjQyLjg1NyAyNjkuMzYyIDI1OC4yNjYgMjk2LjE1NCAyNTkuMzMyIDI5Ny45OTUgMjYwLjQxIDI5OS44MjggMjYyLjYzNyAzMDMuNjM0QzI2Mi42MzcgMjgwLjA1MiAyNjIuNjYgMjU4LjcwMyAyNjIuNjI3IDIzNy4zNjggMjYyLjYwNSAyMjUuMTI3IDI2Mi41MSAyMTIuODkgMjYyLjM5NiAyMDAuNjQxIDI2Mi4yNyAxODcuNTM5IDI1NC42NjQgMTc5Ljc4OCAyNDEuNzY4IDE3OS42NDYgMjMzLjQwMiAxNzkuNTUxIDIyNS4wNTUgMTc5LjcyIDIxNi42OTcgMTc5LjYwNCAyMDQuMzY5IDE3OS40MzMgMTk5LjE2NCAxNzQuMjU2IDE5OS4wMTIgMTYxLjkzNiAxOTguODc1IDE1My4xODYgMTk4Ljc3MSAxNDQuNDMgMTk5LjExMSAxMzUuNjk3IDE5OS40NzMgMTI2LjE4MiAyMDQuMjcxIDEyMS42NDggMjEzLjU4IDEyMS42MjkgMjIyLjE2OCAxMjEuNjA1IDIzMC43NjggMTIxLjk4NiAyMzkuMzcxIDEyMS45NTMgMjU3LjI5NSAxMjEuODcxIDI2NC4zNCAxMTQuNTk0IDI2NC40MDQgOTYuNTQ1IDI2NC40NjcgNzYuMzE4IDI2NC42NzYgNTYuMDcgMjY0Ljc0NCAzNS44MzIgMjY0LjgwMyAyMC44NTIgMjYzLjM0OCAxOS4zNTkgMjQ4Ljk2NyAxOS4zNTkgMjI0LjM4NyAxOS4zNTkgMTk5LjgwMyAxOS4zNCAxNzUuMjMgMTkuMzgzIDE2MS4xNTYgMTkuNDA0IDE1NSA5NC4zNTQgMTU0LjM1NCA2Mi41NTkgMTUzLjk0MSA4NS4yNzkgMTUzLjUxMiAxMDguMDAyIDE1My4zNDYgMTE3LjQ2MSAxNDkuNDY1IDEyMi4zMTQgMTQwLjI4MyAxMjMuOTM2IDEzNS4xOTUgMTI0LjgzNCAxMjkuOTY3IDEyNC44MzQgMTI0Ljg4MSAxMjMuODI4IDExNi41OTIgMTIyLjE4OCAxMTIuMzk2IDExNy44MzIgMTExLjk3MyAxMDkuMDQ5IDExMC44OTYgODYuMTI3IDExMC4zNzUgNjMuMTU4IDEwOS40NzcgNDAuMjMyIDEwOC45MjYgMjYuNTU5IDEwMS44NjkgMTkuNzQgODguNDYxIDE5LjY3IDc0LjE5NyAxOS41ODggNTkuOTQzIDE5LjM1OSAzNS42OTMgMTkuNzI1IDI4LjQ5IDIwLjE3OCAxMy44OTEgMTQuNjU0IDIuMTM3IDEuNzMgMS41MjMgMS4wNTcuNzA3LjU3MiAwIDAiIGZpbGw9IiNmZmZmZmYiLz4KPHBhdGggdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsLTEsMTgyNy43NDMyLDU2LjQzNjI4KSIgZD0iTTAgMEMtNy4yMjktMTkuODQ4LTE3LjY1OC0zNy40ODQtMjkuMzc3LTU0LjM2Qy01MS4zMDMtODUuOTQ2LTc5LjE3Ni0xMTEuNDItMTA5LjEzNy0xMzQuNzU0Qy0xNDMuMDk0LTE2MS4xODQtMTc2Ljk4Mi0xODcuNjYyLTIwNS4zMTEtMjIwLjYzMUMtMjI1LjQzNC0yNDQuMDQxLTI0Mi44NDYtMjY5LjM2Ny0yNTguMjY2LTI5Ni4xNkMtMjU5LjMyNi0yOTguMDEtMjYwLjQwNC0yOTkuODM4LTI2Mi42MjEtMzAzLjY0NkMtMjYyLjYyMS0yODAuMDUzLTI2Mi42NDgtMjU4LjcyMS0yNjIuNjExLTIzNy4zODNDLTI2Mi41OS0yMjUuMTI1LTI2Mi41LTIxMi44OTYtMjYyLjM4MS0yMDAuNjU2Qy0yNjIuMjQ2LTE4Ny41NDktMjU0LjY0NS0xNzkuNzk3LTI0MS43NDYtMTc5LjY1OEMtMjMzLjQwNi0xNzkuNTYzLTIyNS4wMzctMTc5LjcyMy0yMTYuNjg2LTE3OS42MTVCLTIwNC4zNTItMTc5LjQzNi0xOTkuMTU0LTE3NC4yNjgtMTk4Ljk4Ni0xNjEuOTM4Qy0xOTguODc5LTE1MzA0LTE5OC43NTgtMTQ0LjQzOC0xOTkuMDg0LTEzNS43MDZDLTE5OS40NTktMTI2LjE5LTIwNC4yNjQtMTIxLjY2Mi0yMTMuNTU3LTEyMS42NEMtMjIyLjE1LTEyMS42Mi0yMzAuNzU2LTEyMS45ODgtMjM5LjM0Ni0xMjEuOTQ3Qy0yNTcuMjc5LTEyMS44NzQtMjY0LjMyNi0xMTQuNjA1LTI2NC4zOTUtOTYuNTUyQy0yNjQuNDY3LTc2LjMxOC0yNjQuNjU4LTU2LjA4Mi0yNjQuNzI3LTM1Ljg0NEMtMjY0Ljc4NS0yMC44NTQtMjYzLjMxOC0xOS4zNzMtMjQ4Ljk1MS0xOS4zNzNDLTIyNC4zNzMtMTkuMzczLTE5OS43OTUtMTkuMzQtMTc1LjIxNS0xOS4zOTRDLTE2MS4xMzctMTkuNDE0LTE1NS4wMi0yNS41ODUtMTU0Ljc1Ni0zOS44NTJDLTE1NC4zMzYtNjIuNTcyLTE1My45My04NS4yODYtMTUzLjUwNC0xMDguMDE1Qy0xNTMuMzI4LTExNy40NzctMTQ5LjQ1MS0xMjIuMzMyLTE0MC4yODMtMTIzLjk1NkMtMTM1LjE5My0xMjQuODQ1LTEyOS45NDUtMTI0Ljg0NS0xMjQuODY3LTEyMy44NDJDLTExNi41OC0xMjIuMjAxLTExMi4zODUtMTE3LjgzMS0xMTEuOTc1LTEwOS4wNjJDLTExMC44ODEtODYuMTI0LTExMC4zNjktNjMuMTY0LTEwOS40NTUtNDAuMjMzQy0xMDguOTA4LTI2LjU3Ni0xMDEuODQ4LTE5Ljc0MS04OC40NDMtMTkuNjc4Qy03NC4xOTEtMTkuNjA0LTU5LjkyNi0xOS4zNzMtNDUuNjgyLTE5LjczMUMtMjguNDcxLTIwLjE3NS0xMy44NjktMTQuNjU3LTIuMTE5LTEuNzM2Qy0xLjUxMi0xLjA2OS0uNzA1LjgxMSAwIDAiIGZpbGw9IiNmZmZmZmYiLz4KPHBhdGggdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsLTEsMTM3Ni4xMTA0LDczLjM0ODg4KSIgZD0iTTAgMEMtMTMuMTc2IDE3LjA0OS00MC4xMTUgOS42ODktNDAuMTE1IDkuNjg5Qy00Mi42MjkgOC44OTMtNDUuMDg4IDcuOTA5LTQ3LjQ0NSA2Ljc5OEMtNDguMTc4IDYuMTE1LTQ4LjY4NiA1LjI0My00OC43OTkgNC4yNTlDLTQ5LjE4LTEuMTE1LTQ0Ljg1Ny0uMzEyLTQ0Ljg1Ny0uMzEyTC00MS44OTMuMzEzQy0zNS43MzYgMS43MjQtMjMuNDAyIDMuOTQ1LTE0LjQxNi0uOTg4Qy0zLjk5OC03LjE2Ny00LjA2My0yMi41NDMtNy4zMjYtMjkuOTU1Qy0xMS45NTEtNDAuNDU4LTI3LjIzOC0zOS40NjktMzAuNTY0LTM5Ljg5OEgtNzUuNjc2Vi00OC45MjJILTM0LjEyM0MtMjcuOTY3LTQ5LjM1Ny05LjExOS00OS44NDktLjYwNC0zOC42NzJDMy4zOTYtMzQuMDM5IDUuODA1LTI4LjI4NyA2LjM0Mi0yMi4yNDJDNi44NDQtMTQuNzYyIDQuODc1LTcuMjg3LjgwOS0uOTg4TS04Ni41NzItNDMuNzMxQy04Ni41NzItNDAuMjEtODkuNDU5LTM3LjMwOC05Mi45NzctMzcuMzA4Qy05Ni40OS0zNy4zMDgtOTkuMzg1LTQwLjIxLTk5LjM4NS00My43MzFDLTk5LjE5Ny00Ny4wMDctOTYuNDktNDkuNTM1LTkzLjIxNS00OS41MzVDLTg5Ljk2My00OS41MzUtODcuMzExLTQ3LjAwNy04Ny4wNjMtNDMuNzkxTS0xMjcuNjEzLTM0LjA5NkMtMTI2LjA3LTI5LjcxMS0xMjUuMjA3LTI1LjA3OC0xMjUuMDg2LTIwLjM4MVY1LjkyNEMtMTI1LjAxOCA2LjIzNi0xMjUuMDE4IDYuNDgtMTI1LjA4NiA2Ljc5OEMtMTI1LjIwNyA4LjA5LTEyNS44ODMgOS4zMjYtMTI2LjkzMiAxMC4xM0gtMTI3LjQ4NkMtMTI3Ljg1MiAxMC4zMTEtMTI4LjIzMiAxMC40MzgtMTI4LjY1NiAxMC41NThILTEyOS44My0xMzEuMzY1LTEzMi40NzlMLTEzMy43MDcgMTAuMTNDLTEzMy44MzQgMTAuMDY3LTEzNC4wMjMgMTAuMDY3LTEzNC4xNDYgMTAuMTNDLTEzNS4yNTQgOS4zNzktMTM1Ljk5MiA4LjE1My0xMzYuMDU1IDYuNzk4Qy0xMzYuMTE5IDYuNDgtMTM2LjExOSA2LjIzNi0xMzYuMDU1IDUuOTI0Vi0yMi44NTZDLTEzNi4xMTktMjcuNDE4LTEzNy43Ny0zMS44MTEtMTQwLjgwNy0zNS4yMDJDLTE0NC44MTEtMzguNTQ1LTE0OS45MjItNDAuMzk1LTE1NS4xNjItNDAuMzMySC0xNTcuMDYzQy0xNjIuMzY5LTQwLjM5NS0xNjcuNDg0LTM4LjU0NS0xNzEuNDItMzUuMDlDLTE3NC4zODMtMzEuNjI2LTE3Ni4xMDktMjcuMzA0LTE3Ni4xNjgtMjIuNzI5VjYuMDU4IDcuMDMxQy0xNzYuNDA2IDguMzQ0LTE3Ny4wODggOS41MDYtMTc4LjA3OCAxMC4zMTFILTE3OC41OC0xNzguODc1TC0xODAuMDQ1IDEwLjc0M0gtMTgxLjE2LTE4Mi42MzVDLTE4My4wMTYgMTAuODY0LTE4My40MzYgMTAuODY0LTE4My44MDUgMTAuNzQzQy0xODQuMjM0IDEwLjY3OS0xODQuNzMyIDEwLjU1OC0xODUuMTEzIDEwLjMxMUgtMTg1LjU5NEMtMTg2LjcwMSA5LjU3LTE4Ny4zNzEgOC4zNDQtMTg3LjU1NyA3LjAzMUMtMTg3LjYxOSA2LjcyOS0xODcuNjE5IDYuNDE3LTE4Ny41NTcgNi4xMTVWLTE5Ljk1Ny0yMi40ODZDLTE4Ny41NTctMjcuMDU2LTE4OS4yOTktMzEuNDQ1LTE5Mi4zMTMtMzQuODM2Qy0xOTYuMzEzLTM4LjIzOC0yMDEuNDI4LTQwLjA3OC0yMDYuNzI3LTQwLjAyNUgtMjA3Ljc3OS0yMDkuMzE4Qy0yMTQuNTU3LTQwLjA3OC0yMTkuNjY0LTM4LjIzOC0yMjMuNjc2LTM0LjgzNkMtMjI2LjYzNy0zMS4zODEtMjI4LjI0LTI2Ljk5OC0yMjguMjQtMjIuNDg2Vi0yMC4zMjgtMTkuNjQ1IDYuMjM2Qy0yMjguMTcyIDYuNDgtMjI4LjE3MiA2Ljc5OC0yMjguMjQgNy4wMzFDLTIyOC4zMTEgOC4zOTUtMjI5LjA0OSA5LjY4OS0yMzAuMTQ1IDEwLjQzOEgtMjMwLjU3MkMtMjMwLjk0OSAxMC42NzktMjMxLjM3NSAxMC44MDYtMjMxLjgwNSAxMC44MDZDLTIzMi4xODIgMTAuODY0LTIzMi42MDQgMTAuODY0LTIzMi45ODQgMTAuODA2SC0yMzQuNDYxLTIzNS42OTFDLTIzNi4wNTUgMTAuNjc5LTIzNi40MjQgMTAuNTU4LTIzNi43OTkgMTAuMzExSC0yMzcuMTA5TC0yMzcuNjA5IDkuOTRDLTIzOC43MDkgOS4xOTktMjM5LjM5MyA3Ljk3My0yMzkuNDQ5IDYuNjZWNTAyNjUtMjAuODc4LTQwLjE0N0gtMjkzLjM2N0MtMjk4LjQ4LTQwLjAyNS0zMDMuNDA2LTM4LjIzOC0zMDcuMzYxLTM0Ljk2M0MtMzEwLjY4LTMwLjg4NS0zMTIuNDEtMjUuNzAyLTMxMi4xNjYtMjAuNDQ5Vi0xOS43MDMgMzUuMjY2Qy0zMTIuMTA0IDM4LjA0OC0zMTQuMzg3IDQwLjMzMy0zMTcuMTUgNDAuMzk2SC0zMTcuNDA4LTMxOC44M0MtMzIxLjU5NCA0MC41MTQtMzIzLjk0MyAzOC4yOTItMzI0LjA2MSAzNS41MDlWMzUuMzI5LTE5LjY0NS0yMi4yNDJDLTMyNC4wNjEtMjYuODAyLTMyNS43NzctMzEuMTkxLTMyOC43OTctMzQuNTg4Qy0zMzIuNjkzLTM3Ljg1Ny0zMzcuNDk2LTM5LjY2LTM0Mi41NDEtMzkuNzEySC0zODQuNjM0Qy0zODkuOTQtMzkuNzg0LTM5NS4wNDctMzcuOTMxLTM5OS4xMTctMzQuNTI4Qy00MDIuMTQ2LTMxLjEzNC00MDMuNzktMjYuNzQ4LTQwMy44NTktMjIuMTc4Vi0xOS41ODYgNi40OEMtNDAzLjc5IDYuNzk4LTQwMy43OSA3LjAzMS00MDMuODU5IDcuMzQ4Qy00MDMuOTE3IDguNzEyLTQwNC42NSA5Ljg3Ni00MDUuNzY0IDEwLjYyOEgtNDA2LjI3MUMtNDA2LjY0MyAxMC44MDYtNDA3LjA3MSAxMC45MjgtNDA3LjQ5NiAxMC45MjhDLTQwNy44NjUgMTAuOTk3LTQwOC4zMDMgMTAuOTk3LTQwOC42NzYgMTAuOTI4SC00MTAuMjAxLTQxMS4zMDlDLTQxMS43NDkgMTAuODY0LTQxMi4xNjggMTAuNjc5LTQxMi41NDkgMTAuNDg5TC00MTMuMDQ4IDEwLjEzQy00MTQuMTUzIDkuMzc5LTQxNC44ODkgOC4yMTctNDE0Ljk1OSAyNDYtNDE1LjAwOSA2LjU0NC00MTUuMDA5IDYuMjk5LTQxNC45NTkgNS45OTVWLTIwLjEzOC0yMi4yNDJDLTQxNS4wNzMtMjYuODAyLTQxNi44LTMxLjE5MS00MTkuODE0LTM0LjU4OEMtNDIzLjg4OS0zNy45OTUtNDI5LjAwMi0zOS43ODQtNDM0LjI0Ni0zOS42NkgtNDM1LjM0My00OTEuNzk3Vi0xMy40MDhDLTQ5MS45ODgtNS42ODUtNDk1LjczMyAxLjUzOS01MDIuMDIzIDYuMDU4Qy01MDcuNjk5IDkuNjg5LTUxNC4xNjcgMTEuODU1LTUyMC44OTIgMTIuMjI1SC01MjYuMzY1Qy01MzIuOTU2IDExLjc5Ny01MzkzMDcgOS42ODktNTQ0Ljg1MiA2LjA1OEMtNTUxLjI1MiAxLjY2Ni01NTUuMTk5LTUuNjIyLTU1NS4zMjItMTMuNDA4Vi0zNi4xMzNDLTU1NS4zMjItMzYuMTMzLTU1NS42OTYtMzguMTExLTU1NS45OTktMzkuNDY5SC02MjMuNzg1Qy02MjQuMjgxLTM5LjUzOC02MjQuNzEtMzkuNTM4LTYyNS4yMDItMzkuNDY5Qy02MzAuNDk0LTM5LjUzOC02MzUuNjEyLTM3LjY3Ny02MzkuNjIzLTM0LjI3NEMtNjQyLjk1NS0zMC4yMDEtNjQ0LjY3OS0yNS4wNzgtNjQ0LjQyMS0xOS44M1YtMTkuMDkzIDM1LjgyNkMtNjQ0LjMxNiAzOC41OTktNjQ2LjQ2MyA0MC44OTUtNjQ5LjI0NiA0MS4wMTFILTY0OS42NzUtNjUxLjA5Qy02NTMuODQ1IDQxLjA3NS02NTYuMjAyIDM4Ljg0Ny02NTYuMjY1IDM2LjA4VjM1Ljg4NS0xOS4wMjctMjIuOTgzQy02NTYuMjAyLTMwLjc3LTY1Mi4zNzEtMzcuOTk1LTY0Ni4wMy00Mi40MzJDLTY0MC4wNDktNDYuMjY2LTYzMy4xNTMtNDguNDI0LTYyNi4wNTgtNDguNjE1SC02MjEuNjI2LTU1NC44M0MtNTUzLjQ4LTU0LjEwNS01NTAuMDg4LTU4Ljg2NS01NDUuMzQ1LTYxLjg5MUMtNTM5Ljc5LTY1LjUzLDUzMy40MzgtNjcuNjM3LTUyNi44NjItNjguMDY5SC01MjUuOTg5LTUyMy41ODMtNTIyLjcyNEMtNTE2LjEzLTY3LjU3NC01MDkuNzkzLTY1LjQ2Ni01MDQuMjMxLTYxLjg5MUMtNDk5LjUwMy01OC44NjUtNDk2LjA1LTU0LjEwNS00OTQuNjIxLTQ4LjYxNUgtNDM5Ljg0Mi00MzUuNTQxQy00MjguNDQxLTQ4LjQyNC00MjEuNTU0LTQ2LjI2Ni00MTUuNTY2LTQyLjQzMkMtNDEzLjg5OS00MS40NDYtNDEyLjQyMi00MC4yMS00MTEuMTQ1LTM4LjczQy00MDkuODQ1LTQwLjIxLTQwOC4zNi00MS40NDYtNDA2Ljc3My00Mi41Qy00MDAuODQyLTQ2LjMzLTM5My45MzEtNDguNDg4LTM4Ni44NDYtNDguNjY4SC0zODEuODU1LTM0My43NzEtMzQyLjk3N0MtMzM1Ljk0OS00OC40MjQtMzI5LjE2OC00Ni4zMy0zMjMuMjU0LTQyLjVDLTMyMS42NDgtNDEuMzkxLTMyMC4yMjctNDAuMDc4LTMxOS4wMjEtMzguNjcyQy0zMTcuNjUtNDAuMTQ3LTMxNi4xMTctNDEuNDQ2LTMxNC40NTEtNDIuNUMtMzA4LjQ2OS00Ni4zMy0zMDEuNjI5LTQ4LjQyNC0yOTQuNTQzLTQ4LjY2OEgtMjkwLjA5NC0yNDAuMjA1LTIyOC40ODRWLTQzLjczMUMtMjIzLjA2My00Ni42OS0yMTcuMDg4LTQ4LjQ4OC0yMTAuOTMtNDguNzk1SC0yMDYuNDg2Qy0xOTkuNDU3LTQ4LjYxNS0xOTIuNjE3LTQ2LjQ1Mi0xODYuNzAxLTQyLjYyM0MtMTg1LjExMy00MS41NzMtMTgzLjY4NC00MC4yNzQtMTgyLjM4NS0zOC43OTlDLTE4MS4xNi00MC4yNzQtMTc5LjYwNS00MS41NzMtMTc3Ljk1NS00Mi41NTlDLTE3Mi4wOTgtNDYuNDUyLTE2NS4yNjItNDguNTQ2LTE1OC4yMy00OC43MzdILTE1My44NjVDLTE0Ny4wODYtNDguNDI0LTE0MC41NTctNDYuMjY2LTEzNC44OTEtNDIuNTU5Qy0xMzEuNDI4LTQwLjIxLTEyOC43ODMtMzYuOTM3LTEyNy4xNzYtMzMuMTA3TS01MDUuNTkzLTE3LjIzN1YtMjIuMTc4LTM0LjUyOC0zOC44NTJDLTUwNS42NjEtMzkuMTA2LTUwNS42NjEtMzkuMzYtNTA1LjU5My0zOS42MDFDLTUwNS41OTMtNDAuMzk1LTUwNS4yOTEtNTAuMTAzLTUxMC41MjctNTQuMDQyQy01MTQuNTk5LTU3LjQ0NC01MTkuNzEtNTkuMjk2LTUyNS4wMDktNTkuMTcySC01MjUuNzQ1LTUyNi42MTlDLTUzMS45MDgtNTkuMTcyLTUzNy4wMy01Ny4zMjEtNTQxLjA5Mi01My45MjdDLTU0NC41MzUtNDkuOTE2LTU0Ni4yNi00NC42NTktNTQ1Ljc3OS0zOS4zNlYtMTcuMjk2LTE2LjU1NEMtNTQ2LjI2LTExLjMwOC01NDQuNTM1LTYuMDU1LTU0MC45NjUtMi4xNjRDLTUzNi45MDMgMS4yMzQtNTMxLjc4OCAzLjA4Ny01MjYuNDg1IDIuODk2Qy01MjYuMTc5IDIuOTYtNTI1LjkyNSAyLjk2LTUyNS42MTggMi44OTZILTUyNC44ODJDLTUxOS41NzggMi45Ni01MTQuNDggMS4xMDctNTEwLjQtMi4yOTFDLTUwNi44ODYtNi4yOTktNTA1LjE2NC0xMS40OTQtNTA1LjY2MS0xNi44MDZNLTY4Ni42OTctNDEuODc2VjcuMjIxQy02ODYuNjM2IDEwLjA2Ny02ODguOTg1IDEyLjQxNi02OTEuODA1IDEyLjQ3NUgtNjkxLjg2OS02OTMuMjI4Qy02OTYuMDAyIDEyLjU5Ni02OTguNDAzIDEwLjQzOC02OTguNTMgNy42NTVWNy40MTItMzcuNTUtMzguMzYxQy02OTguMzU5LTQzLjY3My03MDAuMDcxLTQ4Ljg1OS03MDMuMzk1LTUyLjkzN0MtNzA3LjUyNi01Ni4yNjItNzEyLjYzMy01OC4wNjItNzE3LjkzMS01OC4wMDRDLTcxOC4xODUtNTcuOTM1LTcxOC40MzUtNTcuOTM1LTcxOC42ODQtNTguMDA0SC03MTkuNDgyQy03MjQuNzgzLTU4LjAwNC03MjkuODktNTYuMTQ4LTczMy45NjgtNTIuODFDLTczNy4zNTUtNDguNzM3LTczOS4wNjktNDMuNTQ2LTczOC43NjctMzguMjM4Vi0zNy41NSA3LjUzMUMtNzM4Ljc2NyAxMC4zNzUtNzQxLjA1MiAxMi42Ni03NDMuODkgMTIuNjZILTc0NC4wMDUtNzQ1LjQyN0MtNzQ4LjI2NCAxMi43MjMtNzUwLjUzNiAxMC40MzgtNzUwLjYwNyA3LjU5MlY3LjQ2NS00MS45NDVDLTc1MC40MTctNDkuNjY4LTc0Ni41OTItNTYuODg3LTc0MC4yNTItNjEuMzM4Qy03MzQuNjQ3LTY0Ljk4MS03MjguMTY4LTY3LjA4Mi03MjEuNDYzLTY3LjUxSC03MTUuOTY4Qy03MDkuMzcxLTY3LjAxOC03MDMuMDI0LTY0LjkxNy02OTcuNDgxLTYxLjMzOEMtNjkxLjA3LTU2Ljk1MS02ODcuMi00OS43MjUtNjg3LjA3OC00MS45NDVNLTCxMS45NjkgMzcuNzNDLTcxMS41MjkgNDEuMzE4LTcxNC4xMjcgNDQuNTg1LTcxNy42OTMgNDQuOTY2Qy03MjEuMjggNDUuMzM3LTcyNC41MjkgNDIuODAzLTcyNC45MSAzOS4yMjRDLTcyNS4zMzUgMzUuNjM2LTcyMi43NDcgMzIuMzY4LTcxOS4xNzggMzEuOTkyQy03MTguOTI0IDMxLjk5Mi03MTguNjg0IDMxLjkyOC03MTguNDM1IDMxLjkyOEMtNzE1LjAzOSAzMS43NDQtNzEyLjE1MSAzNC4zMzYtNzExLjk2OSAzNy43M00tODE5LjQzLTQ3LjgwN0gtODA3LjY1NVYzNi42MjFDLTgwNy42MDggMzkuNDAxLTgwOS43NjYgNDEuNjg3LTgxMi41MzMgNDEuNzQxSC04MTIuNzgxLTgxNC4yNTZDLTgxNi45NyA0MS44NzctODE5LjMwNyAzOS43NzMtODE5LjQzIDM3LjA1M1YzNi42ODUtNDcuNjg2Wk0tODQ4LjM5MS0yMi4yNDJWLTE4LjUyOSAzNi40MzVDLTg0OC4zMjggMzkuMjI0LTg1MC40OTMgNDEuNTA5LTg1My4yNTggNDEuNTY3SC04NTMuNTEyLTg1NUMtODU3Ljc2NSA0MS42ODctODYwLjEwOCAzOS41ODMtODYwLjIzMiAzNi44MTJWODYuNDM1LTE4LjUyOS0xOS4zMzJDLTg1OS45ODEtMjQuNTgxLTg2MS43MDUtMjkuNzExLTg2NS4wMjktMzMuNzI2Qy04NjkuMDI4LTM2LjkzNy04NzMuOTA0LTM4LjczLTg3OS4wMDItMzguOTJILTk1MC4wNjVDLTk0Ni42ODktMjQuNzA4LTk1MC4zNzEtOS43MDYtOTYwLjA0MyAxLjIzNEMtOTcyLjM3OCAxNC42MzMtOTkwLjg2NyAxMy41ODktMTAwMS42NDUgMTEuNDg0Qy0xMDA0LjQ3NSAxMC44MDYtMTAwNy4yNjUgOS44MTMtMTAwOS45MDEgOC41ODVDLTEwMTAuOTUgNy40MTItMTAxMS40NTUgNS44MTEtMTAxMS4yMDUgNC4yNTlDLTEwMTEuMjA1IDMuODE4LTEwMTAuMzQxIC45ODYtMTAwNy45OTMgMS4zNjFDLTEwMDEuODM1IDIuMDM3LTk3Ny45MTYgOS44MTMtOTY1LjUyOC04Ljc3NEMtOTYwLjA0My0xNy44NTMtOTU4LjY5OS0yOC43OTEtOTYxLjgzNC0zOC45MkwLTEwNTEuOTE5LTM4LjU0NUMtMTA1Ny4xMDItMzguMzYxLTEwNjIuMDM4LTM2LjM4MS0xMDY1Ljg1MS0zMi44NTNDLTEwNjguODcxLTI5LjQ1OC0xMDcwLjYwMy0yNS4wNzgtMTA3MC42NjctMjAuNTE5Vi0xOC4wMzIgOC42NDNDLTEwNzAuNjAzIDguOTU2LTEwNzAuNjAzIDkuMjYzLTEwNzAuNjY3IDkuNTdDLTEwNzAuNzg4IDEwLjg2NC0xMDcxLjQ1NCAxMi4wOTgtMTA3Mi41NjUgMTIuODQzQy0xMDcyLjY4NiAxMi45MDYtMTA3Mi44NzYgMTIuOTA2LTEwNzMuMDAzIDEyLjg0M0gtMTA3My4zMTRDLTEwNzMuNjY5IDEzLjA4Mi0xMDc0LjEwNyAxMy4yMDgtMTA3NC41NDIgMTMuMjc2SC0xMDc1Ljc3My0xMDc3LjEyN0MtMTA3Ny41IDEzLjMzNS0xMDc3LjkyMyAxMy4zMzUtMTA3OC4zMDQgMTMuMjc2Qy0xMDc4LjcyOCAxMy4yMDgtMTA3OS4xNjcgMTMuMDI4LTEwNzkuNTMyIDEyLjg0M0gtMTA4MC4wMTdDLTEwODEuMTM0IDEyLjA5OC0xMDgxLjgxNyAxMC44NjQtMTA4MS45OTUgOS41N1Y4LjY0My0xNy40ODEtMjAuMjAxQy0xMDgxLjk5NS0yNC43NzEtMTA4My43MjQtMjkuMTYtMTA4Ni44MS0zMi41NTdDLTEwOTAuODA0LTM2LjAwNi0xMDk1Ljk4Mi0zNy44MDQtMTEwMS4yODktMzcuNjc3Qy0xMTAxLjk1OC0zNy44MDQtMTEwMi42MzYtMzcuODA0LTExMDMuMzI0LTM3LjY3N0gtMTEzNy44ODhDLTExNDMuMDYtMzcuNjc3LTExNDguMTEyLTM1LjgyNi0xMTUyLjEzMS0zMi41NTdDLTExNTUuMTQtMjkuMTYtMTE1Ni43OTgtMjQuNzcxLTExNTYuOTI4LTIwLjIwMVYtMTcuNDgxIDguNjQzIDkuNDQzQy0xMTU3LjA1NSAxMC44MDYtMTE1Ny43MzkgMTEuOTgyLTExNTguODMzIDEyLjc4N0wtMTE1OS4zMzcgMTMuMTQ5LTEyNjAuNjI4IDEzLjU4OUgtMTE2MS43MzMtMTE2NC4zNzdMLTExNjUuNjE0IDEzLjE0OUgtMTE2Ni4xMDdDLTExNjcuMjExIDEyLjQxNi0xMTY3Ljk2IDExLjE3Ny0xMTY4LjA4NyA5LjgxM1Y4Ljk1Ni0xNy4xMS0xOS44OTNDLTExNjguMDg3LTI0LjQ2Mi0xMTY5LjgwMS0yOC44NDItMTE3Mi44ODMtMzIuMjVDLTExNzYuOTYzLTM1LjY5OS0xMTgyLjEyOS0zNy40ODctMTE4Ny40MzUtMzcuNDI3Qy0xMTg3Ljk5MS0zNy4zNjQtMTE4OC41OTQtMzcuMzY0LTExODkuMTYxLTM3LjQyN0gtMTIyMC44MzUtMTIyMi4zMTZDLTEyMjcuNjE2LTM3LjQyNy0xMjMyLjc4My0zNS41MTQtMTIzNi44NS0zMi4xMTZDLTEyMzkuODA5LTI4LjcyNy0xMjQxLjQ3OS0yNC4zMzUtMTI0MS41MzItMTkuNzY2VjguNjQzQy0xMjQxLjQ3OSA4Ljk1Ni0xMjQxLjQ3OSA5LjI2My0xMjQxLjUzMiA5LjU3Qy0xMjQxLjY1OSAxMC45MjgtMTI0Mi40MDYgMTIuMTY1LTEyNDMuNTEgMTIuOTA2Qy0xMjQzLjYzNyAxMi45NzctMTI0My44MTcgMTIuOTc3LTEyNDMuOTQgMTIuOTA2SC0xMjQ0LjI0MkMtMTI0NC42MTMgMTMuMDgyLTEyNDUuMDUyIDEzLjIwOC0xMjQ1LjQ2NyAxMy4zMzVDLTEyNDUuODU1IDEzLjM5OS0xMjQ2LjIyNSAxMy4zOTktMTI0Ni41ODEgMTMuMzM1SC0xMjQ4LjAwMi0xMjQ5LjEyQy0xMjQ5LjUzNyAxMy4yNzYtMTI0OS45NzQgMTMuMTQ5LTEyNTAuMzUxIDEyLjk3N0MtMTI1MC40NjcgMTMuMDI4LTEyNTAuNTMxIDEzLjAyOC0xMjUwLjY0MyAxMi45NzZILTEyNTEuMTQ2Qy0xMjUyLjE5NiAxMi4xNjUtMTI1Mi44NjkgMTAuOTI4LTEyNTMuMDU5IDkuNjI2Qy0xMjUzLjEyOCA5LjMyNi0xMjUzLjEyOCA5LjA3Ny0xMjUzLjA1OSA4Ljc2NlYtMTkuNzY2Qy0xMjUzLjE4Mi0yNC4zMzUtMTI1NC45MDktMjguNjY0LTEyNTcuODYzLTMyLjExNkMtMTI2MS45OTgtMzUuNDU2LTEyNjcuMTA0LTM3LjI1My0xMjcyLjQwOC0zNy4xODFILTEzMDIuNjAzQy0xMzA3LjkwMi0zNy4yNTMtMTMxMy4wMTMtMzUuNDU2LTEzMTcuMDgtMzIuMDZDLTEzMjAuNDctMjcuOTg3LTEzMjIuMTM0LTIyLjc5Mi0xMzIxLjgzNi0xNy40ODFWOS4xOTlDLTEzMjEuNzczIDExLjk4Mi0xMzI0LjA0MSAxNC4yNTktMTMyNi44MTkgMTQuMzIzSC0xMzI3LTEzMjguMzU1Qy0xMzMxLjE5OSAxNC4zOTUtMTMzMy41MzggMTIuMDM4LTEzMzMuNTkgOS4xOTlWLTE2LjkyLTIwLjc1MUMtMTMzMy40NzQtMjguNDczLTEzMjkuNjQ5LTM1LjY5OS0xMzIzLjMwNy00MC4xNDdDLTEzMTcuMzk3LTQ0LjA0LTEzMTAuNDk2LTQ2LjEzOS0xMzAzLjQwNy00Ni4zM0gtMTI5OS4wMjMtMTI3Ny4yMDYtMTI3Mi44NDNDLTEyNjUuNzQ2LTQ2LjEzOS0xMjU4Ljg0Ni00NC4wNC0xMjUyLjg2OS00MC4xNDdDLTEyNTEuMjA5LTM5LjE2OS0xMjQ5LjczOC0zNy45MzEtMTI0OC40OTQtMzYuNDQ1Qy0xMjQ3LjE5OS0zNy45MzEtMTI0NS43MTctMzkuMjI0LTEyNDQuMDY3LTQwLjIxQy0xMjM4LjA4OS00NC4wNC0xMjMxLjI0OS00Ni4yMDMtMTIyNC4xNjUtNDYuMzgzSC0xMjE5LjkwOS0xMTkyLjA1My0xMTg3LjY3N0MtMTE4MC41ODUtNDYuMjAzLTExNzMuNjkzLTQ0LjEwMy0xMTY3LjcxOS00MC4yMUMtMTE2Ni4wNDItMzkuMjI0LTExNjQuNTY5LTM3Ljk5NS0xMTYzLjI3Ni0zNi41MDNDLTExNjIuMDM5LTM3Ljk5NS0xMTYwLjU3LTM5LjIyNC0xMTU4LjkwMy00MC4yMUMtMTE1Mi45MjUtNDQuMDQtMTE0Ni4wODEtNDYuMjAzLTExMzguOTk4LTQ2LjM4M0gtMTEzNC41NjUtMTEwNS41MzUtMTEwMS4wOTFDLTEwOTQuMDAzLTQ2LjIwMy0xMDg3LjE3OC00NC4wNC0xMDgxLjIwNC00MC4yMUMtMTA3OS41MzItMzkuMTY5LTEwNzguMDUzNy44NTctMTA3Ni43Ni0zNi4zODFDLTEwNzUuNDY0LTM4LjExMS0xMDczLjg2MS0zOS42MDEtMTA3Mi4wMi00MC43NzJDLTEwNjYuMDQyLTQ0LjY1OS0xMDU5LjEyNi00Ni43NTMtMTA1Mi4wNTItNDYuOTQ0SC0xMDQ3LjY3Nkw4ODIuOTY2LTQ3LjM3NUgtODc4LjUyMkMtODcxLjQzNS00Ny4xODUtODY0LjUzMi00NS4wOS04NTguNTU0LTQxLjIwMUMtODUyLjM5LTM2Ljg3NC04NDguNTctMjkuODM4LTg0OC4zOTEtMjIuMjQyTS0xMjkzLjg0Mi02MS43MDhDLTEyOTMuNjY0LTY0Ljk4MS0xMjkwLjk1OC02Ny41MS0xMjg3LjY5MS02Ny41MUMtMTI4NC4zLTY3LjcwMS0xMjgxLjM0My02NS4xMDMtMTI4MS4xNTctNjEuNzA4Qy0xMjgxLjY1Ny01OC4xMTYtMTI4NC45NzQtNTUuNjU2LTEyODguNTQ2LTU2LjE0OEMtMTI5MS40NC01Ni41OC0xMjkzLjcyMS01OC44MDEtMTI5NC4wOTYtNjEuNzA4TS0xMTc4LjYxOC02Mi4zMjZDLTExNzkuMDUzNTkxMS0xMTc2LjUyMy02OS4xODEtMTE3Mi45NTctNjkuNjA1Qy0xMTY5LjM4OC03MC4wMzctMTE2Ni4xMDctNjcuNTEtMTE2NS42NzctNjMuOTIyQy0xMTY1LjI1NC02MC4zNDctMTE2Ny43NzItNTcuMDY3LTExNzEuMzQ5LTU2LjY0MUMtMTE3MS43MjUtNTYuNTgtMTE3Mi4xLTU2LjU4LTExNzIuNDQ5LTU2LjU4Qy0xMTc1LjcyNC01Ni41OC0xMTc4LjM4LTU5LjEwNi0xMTc4LjYxOC02Mi4zMjZNLTEyNjEuMDYxLTYyLjMyNkMtMTE2MS4wNjEtNjUuNzItMTE1OC4yODUtNjguNTAzLTExNTQuODk3LTY4LjUwM0MtMTE1MS41MDctNjguNTAzLTExNDguNzI1LTY1LjcyLTExNDguNzI1LTYyLjMyNkMtMTE0OC43MjUtNTkuMDQ1LTExNTEuMjY0LTU2LjM4OS0xMTU0LjUyMy01Ni4xNDhDLTExNTcuOTE3LTU1Ljk2Ny0xMTYwLjg4Mi01OC41Ni0xMTYxLjA2MS02MS45NDVWLTcwM00tMTA4My43MjQtNjIuMjU3Qy0xMDgzLjM0OC02NS44NDctMTA4MC4xNS02OC41MDMtMTA3Ni41NzgtNjguMTNDLTEwNzMuNDkzLTY3LjgxNS0xMDcxLjAzNi02NS4zNDctMTA3MC43MjQtNjIuMjU3Qy0xMDcwLjk3Mi01OC45MjYtMTA3My43OS01Ni4zMzgtMTA3Ny4xOTEtNTYuNTE2Qy0xMDgwLjU4Mi01Ni4zMzgtMTA4My41NDEtNTguOTI2LTEwODMuNzI0LTYyLjI1N1YtNjIuMzI2TS00MjYuNzg1LTY0LjI0Qy00MjYuNzg1LTY3LjYzNy00MjQuMDA4LTcwLjQxNy00MjAuNjE3LTcwLjQxN0MtNDE3LjM2NS03MC40MTctNDE0LjcwNi02Ny44NzgtNDE0LjQ1Mi02NC42NzRDLTQxNC40NTItNjEuMjc3LTQxNy4yMzgtNTguNDk3LTQyMC42MTctNTguNDk3Qy00MjQuMDA4LTU4LjMxMS00MjYuOTg0LTYwLjkwNC00MjcuMTU1LTY0LjI5OVYtNjQuNjc0TS00MDkuMjczLTY0LjE3NkMtNDA5LjA5NS02Ny41NzQtNDA2LjE0NS03MC4xNzEtNDAyLjc0Ni02OS45ODZDLTM5OS4zNTktNjkuOTg2LTM5Ni41ODItNjcuMTk4LTM5Ni41ODItNjMuODA2Qy0zOTYuODM2LTYwLjYwMS0zOTkuNDg2LTU4LjA2Mi00MDIuNzQ2LTU4LjA2MkMtNDA2LjE0NS01Ny44ODItNDA5LjA5NS02MC40NjktNDA5LjI3My02My44N1YtNjQuMjQiIGZpbGw9IiMyMzFmMjAiLz4KPHBhdGggdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsLTEsMTM3OS44NzIxLDIwMS44Njc4OSkiIGQ9Ik0wIDBDMCAyMC43NjItMjYuODg1IDIwLjA3OS0yNi44ODUgMjAuMDc5SC0zMS41LTQ1LjgxMy00OC45NDdDLTUwLjQ4NiAxOS44OTctNTEuOTA0IDE5LjIxNi01My4wODIgMTguMTc0Qy01NC4wMDIgMTctNTQuNDMyIDE1LjUyNy01NC4zMDkgMTQuMDQ4Vi01Ny43NjRILTI4LjE2MkMtMjguMTYyLTU3Ljc2NCAyLjY1LTU5LjA1NyAyLjY1LTM2LjIxMUMyLjg5OC0yNi43MTMtNC4yNTItMTguNjU0LTEzLjY4OS0xNy43MjlDLTUuNDM0LTE1Ljg3OSAuMzA5LTguMzY5LS4wNTMuMDY3TS00My4xNTQtMjIuMTY2SC0zMC44MjJDLTMwLjgyMi0yMi4xNjYtOC44NzEtMjAuNzQ2LTkuMTE5LTM1LjQ2M0MtOS4zNzMtNTAuMTg5LTMyLjczMi00OS4zMjItMzIuNzMyLTQ5LjMyMkgtNDIuOTA2Wk0tMTEuNzc3LTEuMDQ5Qy0xMS43NzctMTMuNzg1LTI4Ljg0OC0xNC40MDItMjguODQ4LTE0LjQwMkgtNDIuOTY5VjExLjUyNUgtMzIuODUyQy0zMi44NTIgMTEuNTI1LTEyLjIwMyAxMy4zMDYtMTEuODk4LS43OTVNLc1LjU3OCAxNC43MjVDLTc1LjQ0NyAxNi4zMjEtNzYuMTMxIDE3LjkyLTc3LjQyNiAxOC45MDlDLTc4LjcxOSAxOS42NDQtODAuMjA5IDIwLjA3OS04MS42OTEgMjAuMDc5Qy04My4yMTcgMjAuMDc5LTg0LjcxMSAxOS41MjItODUuODE2IDE4LjU0Qy04Ni43MzggMTcuNDk1LTg3LjMwOSAxNi4xNDMtODcuMzU5IDE0LjcyNVYtNTcuODE2SC03NS41NzhOTS0xMjEuNTgtMTcuODU1Qy0xMTMuMzEzLTE2LjAwNi0xMDcuNTg4LTguNDk2LTEwOC4wMDIuMDU0Qy0xMDguMDAyIDIwLjY5MS0xMzQuODI2IDIwLjAyMS0xMzQuODI2IDIwLjAyMUgtMTUzLjgxMS0xNTYuOUMtMTU4LjQzNCAxOS44MzQtMTU5LjkyIDE5LjIxNi0xNjEuMDk2IDE4LjE3NEMtMTYxLjk1MSAxNy0xNjIuMzgxIDE1LjU4MS0xNjIuMzE2IDE0LjFWLTU3Ljc2NEgtMTM2LjEyMUMtMTM2LjEyMS01Ny43NjQtMTA1LjI5My01OS4xMTktMTA1LjI5My0zNi4yMTFDLTEwNC45ODYtMjYuNzEzLTExMi4wODQtMTguNTktMTIxLjU4LTE3LjcyOU0tMTM2Ljc5OS0xNC4yODFILTE1MC45MTZWMS40NjVILTE0MC42MjdDLTE0MC42MjcgMTEuNDY1LTEyMC4wOTQgMTMuMTg2LTExOS43ODEtLjg2NEMtMTE5LjQ2NS0xMy41NDktMTM2Ljc5OS0xNC4xNjItMTM2Ljc5OS0xNC4xNjJNLTEyNy4wNzYtMzUuNzE3Qy0xMTcuMDc2LTUxLjIzLTE0MC42NzItNDkuNTY0LTE0MC42NzItNDkuNTY0SC0xNTAuOTE2Vi0yMi40MDhILTEzOC45NTFDLTEzOC45NTEtMjIuNDA4LTExNi45NDktMjAuOTM0LTExNy4yMDEtMzUuNzE3TS0xODcuNjY2LTU3LjgxNkgtMTc1LjMyMkwtMjA0Ljc5OSAxNC45NjlDLTIwNS42IDE2LjU2NS0yMDYuNzA1IDE3LjkyLTIwOC4xMjUgMTkuMDMxQy0yMDkuMzA1IDE5Ljc3Ni0yMTAuNzE3IDIwLjIwNi0yMTIuMTI3IDIwLjIwNkMtMjEyLjQ5OCAyMC4yNTctMjEyLjgwNyAyMC4yNTctMjEzLjE4MiAyMC4yMDZILTIxNC4yOTNDLTIxNS43NzEgMjAuMTQzLTIxNy4yMzYgMTkuNzEzLTIxOC41NDUgMTguOTA5Qy0yMTkuOTUxIDE3Ljg2Mi0yMjEuMTI5IDE2LjQ0OC0yMjEuODczIDE0Ljg0MkwtMjUxLjc3NS01Ny43MDFILTIzOS40NDlMLTIzMS40MjYtMzcuMjUySC0xOTUuNDI4Wk0tMTk5LjAwNC0yOC44NzdILTIyOC4yODlMLTIxMy40OTQgOC42MjZaTS0yNjMuMzY1IDE1LjAyNkMtMjYzLjE3OCAxNi42MjktMjYzLjkyMiAxOC4yMzEtMjY1LjIwOSAxOS4yMTZDLTI2Ni40NDMgMTkuOTU3LTI2Ny45MzggMjAuMzMzLTI2OS40MSAyMC4yNTdDLTI3MS4wNzIgMjAuMzg0LTI3Mi43MzYgMTkuODk3LTI3NC4wMzEgMTguOTA5Qy0yNzQuOTQ5IDE3LjgxLTI3NS41MTIgMTYuNDQ4LTI3NS41MTIgMTUuMDI2Vi0xMi4yNTRILTMxNS44MzRWMTUuMDI2Qy0zMTUuNjQ1IDE2LjQ0OC0zMTYuMTI5IDE3LjkyLTMxNy4xODIgMTguOTA5Qy0zMTguNDI4IDE5LjcxMy0zMTkuODk2IDIwLjA3OS0zMjEuMzY3IDE5Ljk1N0MtMzI0LjIxOSAyMC4yNTctMzI2LjczNCAxOC4yMzEtMzI3LjA1MSAxNS40NTRDLTMyNy4wNTEgMTUuMjEtMzI3LjExNSAxNC45NjktMzI3LjA1MSAxNC43MjVWLDU3Ljg4MUgtMzE1LjM0MlYtMjEuNTUxSC0yNzUuMDA0Vi01OC4wMDhILTI2My4yNDJaTS00MTAuODQ0LTU3LjIwNUgtMzc0LjMyOVYtNDguODM2SC00MTAuODg5VjE1LjAyNkMtNDEwLjcxNyAxNi42MjktNDExLjQ0OCAxOC4yMzEtNDEyLjczNyAxOS4xNTJDLTQxMy45NzkgMTkuOTU3LTQxNS40NTggMjAuMzMzLTQxNi45NDQgMjAuMjU3Qy00MTguNDg2IDIwLjI1Ny00MTkuODk0IDE5Ljc3Ni00MjEuMDcgMTguNzgyQy00MjEuOTg2IDE3Ljc0Ni00MjIuNDk0IDE2LjM4NS00MjIuNTQ4IDE0Ljk2OVYtNTcuNTc0SC00MTAuODg5Wk0tNDQ2LjY1MS01Ny4yMDVILTQzNC4zMjZMLTQ2My44NTMgMTUuNTI3Qy00NjQuNTg4IDE3LjEyNy00NjUuNzYzIDE4LjU0LTQ2Ny4yMzIgMTkuNTIyQy00NjguNDEyIDIwLjI1Ny00NjkuNzYyIDIwLjY5MS00NzEuMTc5IDIwLjc2MkMtNDcxLjU2IDIwLjgyNS00NzEuOTM0IDIwLjgyNS00NzIuMjk5IDIwLjc2MkMtNDcyLjY3NCAyMC44NzItNDcyLjk2NyAyMC44NzItNDczLjM0MSAyMC43NjJDLTQ3NC43NjUgMjAuNjkxLTQ3Ni4xMjQgMjAuMjU3LTQ3Ny4zNDcgMTkuNTIyQy00NzguODM3IDE4LjU0LTQ3OS45MzkgMTcuMTI3LTQ4MC42ODIgMTUuNTI3TC01MTAuNjQ0LTU3LjAyNUgtNDk4LjMxOUwtNDkwLjI5MS0zNi43MDNILTQ1NC4yODhaTS00NTguNDIzLTI4LjIwMUgtNDg3Ljc3N0wtNDcyLjk2NyA5LjI0Wk0tNTU1LjI3NCAxNS42NTRDLTU1NS4xNTIgMTcuMjQ4LTU1NS43NzIgMTguNzgyLTU1Ni45NDEgMTkuODM0Qy01NTguMDYxIDIwLjYzNS01NTkuNDA1IDIxLjA2OC01NjAuNzY1IDIxLjAwNUMtNTYyLjE4NyAyMS4wMDUtNTYzLjUzNiAyMC40NDctNTY0LjUzMiAxOS40NjNDLTU2NS4zNzggMTguMzU4LTU2NS44MjggMTctNTY1Ljg3MyAxNS42NTRWLTMxLjA3TC02MDMuMzA1IDE1LjIxQy02MDMuMzA1IDE1LjIxLTYwNi4xOTEgMjAuMDIxLTYwOS4wOTEgMjAuOTQxQy02MTAuOTQxIDIxLjU1OC02MTIuODYzIDIxLjU1OC02MTQuNzA1IDIwLjk0MUMtNjE1LjY5NyAyMC43NjItNjE2LjU1NSAyMC4yMDYtNjE3LjE2OSAxOS4zOTlDLTYxOC4wNDUgMTguMjMxLTYxOC40NzUgMTYuODE0LTYxOC4zNDggMTUuMzM3Vi01Ni41MzdILTYwNy44NTlWNS43OTdMLTU2Ni41MDMtNTYuNzcxSC01NjUuMzc4LTU1NC44MzRaTS02NDMuODcxLTU2LjcxN0gtNjMxLjU0TC02NjEuMDA0IDE2LjAxNkMtNjYxLjc0MSAxNy42NzYtNjYyLjkyIDE5LjA5NS02NjQuNCAyMC4yMDZDLTY2NS41ODEgMjAuOTQxLTY2Ni45MjMgMjEuMzgtNjY4LjM0MiAyMS4zOEMtNjY4LjcxMSAyMS40MzEtNjY5LjAyMiAyMS40MzEtNjY5LjM4MyAyMS4zOEMtNjY5Ljc2NCAyMS40MzEtNjcwLjA2NCAyMS40MzEtNjcwLjQzNyAyMS4zOEMtNjcxLjg2IDIxLjMwNC02NzMuMjc1IDIwLjk0MS02NzQuNTA3IDIwLjIwNkMtNjc1LjkxNyAxOS4xNTItNjc3LjA5NSAxNy43NDYtNjc3Ljg4OSAxNi4xNDNMLTcwNy44MDctNTYuNDY3SC02OTUuNDY2TC02ODcuNDQyLTM2LjA4NEgtNjUxLjQ1Wk0tNjU1LjA5NS0yNy43NzVILTY4NC40MzdMLTY2OS43MDIgOS42NzRaTS03MzAuMjQ3LTU2LjQ2N0gtNzE4Ljc3OEwtNzI3LjY1MSAxNi4yNThDLTcyNy45NTUgMTcuOTItNzI5LjAwMSAxOS4zOTktNzMwLjQ5NCAyMC4zMzNDLTczMS45MDkgMjEuMTI2LTczMy41MDYgMjEuNTU4LTczNS4xMDQgMjEuNjIxQy03MzYuNjU4IDIxLjczNC03MzguMjUxIDIxLjQzMS03MzkuNjc0IDIwLjc2MkMtNzQxLjMzMyAxOS42NDQtNzQyLjYzNyAxOC4wNDctNzQzLjQzNSAxNi4yTC03NjYuNTQ4LTQyLjAwMi03OTAuMDM5IDE2LjI1OEMtNzkwLjU5MSAxOC4wNDctNzkxLjc1NSAxOS41MjItNzkzLjM2OSAyMC41MTFDLTc5NC44NTIgMjEuMzA0LTc5Ni40NTMgMjEuODAyLTc5OC4xMTUgMjEuODAyQy03OTkuODM3IDIxLjg2NS04MDEuNDk5IDIxLjQzMS04MDMuMDU0IDIwLjYzNUMtODA0LjUyNiAxOS41ODYtODA1LjUwOCAxOC4wNDctODA1LjgwOCAxNi4zMjFMLTgxNC44MTgtNTYuMjIxSC04MDQuMjEyTC03OTcuMDAyIDYuNjAyTC03NzEuNzgtNTYuNjY0SC03NjIuMTA1TC03MzcuMDEyIDYuNjAyWk0tODMzLjk5MiAxNi4yQy04MzMuNzk5IDE3Ljg2Mi04MzQuNTQ0IDE5LjQ2My04MzUuOTA5IDIwLjM4NEMtODM3LjEzNCAyMS4yNTMtODM4LjYxNyAyMS42MjEtODQwLjA5OSAyMS41NThDLTg0MS42NDggMjEuNjIxLTg0My4xMTQgMjEuMDY4LTg0NC4yMjggMjAuMDIxQy04NDUuMTUyIDE4LjkwOS04NDUuNzEyIDE3LjU0OS04NDUuNzEyIDE2LjE0M1YtNTYuNDA0SC04MzMuOTM1Wk0tODcwLjk4NS01Ni4yOTNILTg1OC42NTNMLTg4OC4zMTUgMTYuNjI5Qy04ODkuMDQzIDE4LjIzMS04OTAuMjIyIDE5LjY0NC04OTEuNzA1IDIwLjYzNUMtODkyLjg3NCAyMS40MzEtODk0LjIyNyAyMS44NjUtODk1LjY0IDIxLjkyOUMtODk2LjAxNyAyMS45ODgtODk2LjMxMyAyMS45ODgtODk2LjY5NCAyMS45MjlDLTg5Ny4wNzUgMjIuMDUyLTg5Ny40ODMgMjIuMDUyLTg5Ny44NjQgMjEuOTI5Qy04OTkuMjIzIDIxLjg2NS05MDAuNTcgMjEuNDMxLTkwMS43NDQgMjAuNzYyQy05MDMuMjMyIDE5Ljc3Ni05MDQuMzg5IDE4LjM1OC05MDUuMTM2IDE2Ljc1Nkw5MzUuMDM4LTU1LjkwNkgtOTIyLjcxM0wtOTE0LjYyOS0zNS41MzdILTg3OC42MzNaTS04ODIuMjAzLTI3LjMzMkgtOTExLjU1MUwtODk2LjY5NCAxMC4zOThaTS05NzguMjU5LTU1Ljk4SC05NDEuNzU2Vi00Ny4wNDNILTk3OC4yNTlWMTYuNzU2Qy05NzguMTIzIDE4LjM1OC05NzguODIxIDE5Ljk1Ny05ODAuMSAyMC45NDFDLTk4MS40MDIgMjEuNzM0LTk4Mi44NzYgMjIuMTE1LTk4NC4zNjcgMjEuOTg4Qy05ODUuODMyIDIyLjA1Mi05ODcuMzgzIDIxLjU1OC05ODguNDk0IDIwLjU3NEMtOTg5LjM1OCAxOS41MjItOTg5LjkwMyAxOC4xNzQtOTg5LjkwMyAxNi43NTZWLTY1Ljg0NEgtOTc4LjI1OVpNLTEwMTAuMDA0IDE2LjY5MkMtMTAwOS44ODQgMTguMzU4LTEwMTAuNjE2IDE5Ljk1Ny0xMDExLjkxNiAyMS4wMDVDLTEwMTMuMjEgMjEuNzM0LTEwMTQuNjI0IDIyLjExNS0xMDE2LjA5OCAyMi4xMTVDLTEwMTcuNjUgMjIuMTE1LTEwMTkuMTIyIDIxLjYyMS0xMDIwLjI5OCAyMC41NzRDLTEwMjEuMTYyIDE5LjQ2My0xMDIxLjY2NCAxOC4xMS0xMDIxLjcyIDE2LjY5MlYtMzMuMTI1Qy0xMDIyLjE0My0zNy44NjUtMTAyNC42MTktNDIuMTgyLTEwMjguNDM4LTQ1LjAyM0MtMTAzMi42OTEtNDcuMDQzLTEwMzcuMjYxLTQ4LjIxNS0xMDQxLjk0MS00OC40NTVDLTEwNDYuNjk0LTQ4LjUyNy0xMDUxLjQyOC00Ny4yMjktMTA1NS40OTItNDQuNzcwQy0xMDU5LjQ0MS00MS45MzgtMTA2MS43MjctMzcuMzE0LTEwNjEuNjczLTMyLjQ0OVYxNi44MTRDLTEwNjEuNDg4IDE4LjQxNi0xMDYyLjIxOSAyMC4wMjEtMTA2My41MTQgMjEuMDA1Qy0xMDY0LjgxNSAyMS44MDItMTA2Ni4yODIgMjIuMjM3LTEwNjcuNzY3IDIyLjE4M0MtMTA2OS4zMjIgMjIuMTgzLTEwNzAuNzI4IDIxLjY4MS0xMDcxLjg5OCAyMC42OTFDLTEwNzIuODIgMTkuNTg2LTEwNzMuMzg0IDE4LjIzMS0xMDczLjM4NCAxNi44MTRWLTMwLjY3MkMtMTA3My44MTQtMzguMzU3LTEwNzAuNDc0LTQ1LjgxNC0xMDY0LjM3Ny01MC42MTNDLTEwNTAuNTY2LTU5LjY2OC0xMDMyLjY5MS01OS42NjgtMTAxOC44NzYtNTAuNjEzQy0xMDEzLjcwMS00NS44MTQtMTAxMC41NTItMzkuMjMtMTAxMC4wMDQtMzIuMTQzWk0tMTEzMi4wNzQgNC40MzhDLTExMzIuMTI4IDcuMTUtMTEzMC45NjMgOS43MjYtMTEyOC44NjMgMTEuNDY1Qy0xMTE5Ljc0OSAxOS41ODYtMTEwMC40MzUgMTMuMjQyLTExMDAuNDM1IDEzLjI0MkMtMTA5OC41OTQgMTIuNTY3LTEwOTYuNTYzIDEzLjQ4Ni0xMDk1LjgyNCAxNS4zMzdDLTEwOTUuNzY0IDE1LjUyNy0xMDk1LjY5NyAxNS42NTQtMTA5NS42OTcgMTUuODI1Qy0xMDk1LjA4NyAxNy42NzYtMTA5NS45NDEgMTkuNzEzLTEwOTcuNzIyIDIwLjU3NEMtMTEyMy4zMjEgMzAuMjM0LTExNDIuNDc3IDIwLjAyMS0xMTQzLjc3NSA1LjE3OUMtMTE0NC43NzYtNy41NzItMTEzNC42NjQtMTMuMzAxLTExMjUuMjg5LTE3LjIzOEMtMTEyMC45MTQtMTkuMTQ1LTExMTYuOTYyLTIxLjA2MS0xMTE0LjgwNy0yMS44NTlDLTEwOTEuMjU3LTMxLjIxMS0xMTA1LjYyMi01NC45My0xMTMwLjUyMy00NS44NzVDLTExMzQuMDM1LTQ0LjU4NC0xMTM3LjQyNy00My4wNTEtMTE0MC42MzYtNDEuMTk3TC0xMTQ2LjM3Ny00OC44MzZDLTExMzIuODcyLTU4Ljg2NS0xMTE0Ljc0NC02MC4wOTYtMTEwMC4wNzctNTEuOTE4Qy0xMDk0LjI3OC00OC4wMTYtMTA5MC43NjgtNDEuNTA0LTEwOTAuNzA1LTM0LjQ5MkMtMTA5MC4zMzQtMjEuMzA5LTExMDUuMDc2LTEzLjg1LTExMTcuODg3LTguNzk3Qy0xMTI1LjkxLTUuODQyLTExMzIuMjAxLTEuODQzLTExMzIuMTI4IDQuMDA5TS0xMjA1LjUwMS0yMS45OEMtMTIwNy40NzMtMjAuMTM1LTEyMDkuOTk4LTE4Ljk2Ny0xMjEyLjcxNS0xOC41OUMtMTIxMi43MTUtMTguNTktMTE5My4yMTYtMTYuOTM5LTExOTMuMjE2IDEuMjM2Qy0xMTkzLjIxNiAyMy4zNDgtMTIyMC4xNjQgMjIuNzI5LTEyMjAuMTY0IDIyLjcyOUgtMTIzOS4wODgtMTI0Mi4yNDNDLTEyNDMuNzgxIDIyLjQ4NC0xMjQ1LjI1OSAyMS44MDItMTI0Ni4zNzMgMjAuNjkxQy0xMjQ3LjIzNiAxOS41MjItMTI0Ny42NjUgMTguMTEtMTI0Ny42MDEgMTYuNjkyVi01NS4xNjZILTEyMzYuMzc3Vi0yMS43NDJILTEyMjguNjY5Qy0xMjI0LjcyNi0yMS40ODgtMTIyMC43OTMtMjIuMzQ2LTEyMTcuMjcxLTI0LjIwMUMtMTIxNC4zMTQtMjYuODQtMTIxMS45MDctMjkuOTktMTIxMC4xMi0zMy40OTZMLTExOTkuNjM5LTU0Ljk5OEgtMTE4Ny4zMTZMLTEyMDAuMDE0LTI5LjQzNEMtMTIwMS4zMDEtMjYuNTQ3LTEyMDMuMjE2LTIzLjk1NS0xMjA1LjUwMS0yMS43NDJNLTEyMjcuOTI5LTEzLjMwMUgtMTIzNi4yNlYxNC41MzRILTEyMjUuODk4Qy0xMjIxLjg5OSAxNC41OTgtMTIxNy45NTMgMTQuMS0xMjE0LjA2NSAxMy4wNTJDLTEyMDguNzU5IDExLjY0Ni0xMjA1LjAwMyA2Ljg0NS0xMjA0Ljk0NSAxLjM1N0MtMTIwNC45NDUtMTUuMjcxLTEyMjguMjQ3LTEzLjQxOC0xMjI4LjI0Ny0xMy40MThNLTEyNjUuMjk5LTE1LjcwM0MtMTI2NC44NzQtLjkxMi0xMjczLjM3NiAxMi43NDctMTI4Ni44MTUgMTguOTA5Qy0xMjkzLjcxMSAyMS41NTgtMTMwMC45ODIgMjMuMDM2LTEzMDguMzk2IDIzLjE1N0gtMTMzMS43MDNDLTEzMzMuMjMgMjMuMTU3LTEzMzQuNzA3IDIyLjY2OS0xMzM1Ljg4MSAyMS43MzRDLTEzMzYuNzUgMjAuNjM1LTEzMzcuMjk5IDE5LjI4NS0xMzM3LjM1MiAxNy44NjJWLTY0Ljc0NEgtMTMwOC4zOTZDLTEzMDEuMDU0LTU0LjUwNi0xMjkzLjg0NC01My4wMTYtMTI4Ny4wNTItNTAuMzAxQy0xMjczLjQzOC00NC4zNC0xMjY0LjY3Ni0zMC43ODktMTI2NC45MjUtMTUuODc5TS0xMjc3LjA2OS0xNS43MDNDLTEyNzYuNDU2LTI3LjU4Mi0xMjgzLjExMS0zOC42Ny0xMjkzLjg5LTQzLjc4M0MtMTMwMC4xMjMtNDUuNTA0LTEzMDYuNTQzLTQ2LjQzNC0xMzEzLjAwOC00Ni41NTNILTEzMjUuNzc4VjE0LjU5OEgtMTMxMy4wNzlDLTEzMDYuMjkgMTQuNzI1LTEyOTkuNTA1IDEzLjc0LTEyOTMuMTE2IDExLjUyNUMtMTI4Mi43OTkgNi40NjktMTI3Ni41MTktNC4yNDMtMTI3Ny4yNTktMTUuNzA0IiBmaWxsPSIjMjMxZjIwIi8+CjxwYXRoIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLC0xLDAsNDI1LjE5NykiIGQ9Ik0xMDkyLjUyNCAxMTIuMTEySDEwODEuMDk4VjEyMi44MDNIMTA5Mi41MjRaTTEwODMuODUzIDgxLjg4NlY5NC4wNUgxMDc1LjM4QzEwNzAuMTI4IDk0LjA1IDEwNjYuMjU5IDg4LjI0MSAxMDY2LjI1OSA4MS4wNDhDMTA2Ni4yNTkgNzQuNTk1IDEwNjkuOTM3IDY5LjI1OSAxMDc1LjEwNiA2OS4yNTlDMTA4MC41NDIgNjkuMjU5IDEwODMuODUzIDc0LjMyMSAxMDgzLjg1MyA4MS44ODZNTA3NS4xOTYgMTEyLjExMkgxMDYzLjc2MjFWMTIyLjgwM0gxMDc1LjE5NlpNMTE3NSAxMDIuNzU5SDEwMDAuMTcxQzEwOTIuNzk4IDUyLjc1OSAxMDg3LjY0NCA1Ni41MzYgMTA4NC42OSA2NC4wODVDMTA4Mi4zODQgNjAuNDkzIDEwNzcuOTYyIDU4LjU1OCAxMDcxLjU5OSA1OC41NThDMTA2MC41MzYgNTguNTU4IDEwNTMuNDM3IDY4LjE0MiAxMDUzLjQzNyA4MC44N0MxMDUzLjQzNyA5NC41OTkgMTA2MC4zNTYgMTAzLjQ1NiAxMDcyLjUxNSAxMDMuNDU2QzEwNzIuNTE1IDEwMy41MzggMTA4MC43MjggMTAzLjUzOCAxMDk3LjEzMiAxMDMuNTM4Vjc0LjUwNUMxMDk3LjEzMiA2OC40MjkgMTEwMC4yNjkgNjUuMTAxIDExMDYuNTM4IDY1LjEwMUgxMTEzLjE3NVoiIGZpbGw9IiMyNDdlMzgiLz4KPHBhdGggdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsLTEsMCw0MjUuMTk3KSIgZD0iTTExMzAuNDEzIDUyLjc1OUgxMTEwLjY4NFY2NS4xMDFIMTEzMC40MTNaIiBmaWxsPSIjMjQ3ZTM4Ii8+CjxwYXRoIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLC0xLDAsNDI1LjE5NykiIGQ9Ik0xMTU1Ljc2MSAzNy40NDZIMTE0NC4zMzNWNDguMTQ3SDExNTUuNzYxWk0xMTcwLjYwNCA1Mi43NTlIMTEyOS4xMTZWNjUuMTAxSDExMzcuNjA0QzExNDEuOTM1IDY1LjEwMSAxMTQ0LjA2MiA2OC4wNTYgMTE0NC4wNjIgNzMuOTUyVjk0LjUwNUgxMTU3LjA1Vjc0LjQxM0MxMTU3LjA1IDcwLjk5OSAxMTU2LjU5NSA2Ny45NjIgMTE1NS41NzkgNjUuMTAxSDExNzAuNjA0Wk0xMTM4LjQzOCAzNy40NDZIMTEyNy4wMDJWNDguMTQ3SDExMzguNDM4WiIgZmlsbD0iIzI0N2UzOCIvPgo8cGF0aCB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwtMSwxMTk1LjY3NDgsMzU0LjY1NSkiIGQ9Ik0wIDBDMC00Ljg4Ny0xLjM4My04LjkzOC00LjA2MS0xMi4xNjZDLTcuMS0xNS45NTEtMTEuMzQtMTcuNzgzLTE2Ljc3LTE3Ljc4M0gtMjguOTQ1Vi01LjQ0MUgtMTkuNDQ5Qy0xNS4xMTUtNS40NDEtMTIuOTAyLTIuNC0xMi45MDIgMy42VjQxLjU3SDBaIiBmaWxsPSIjMjQ3ZTM4Ii8+CjxwYXRoIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLC0xLDEyNjQuMDY3NCwzNzIuNDM4MikiIGQ9Ik0wIDBILTU5LjczVjEyLjM0MkgtMjYuMjU4Qy0yNi4yNTggMjUuMjQ4LTMzLjI3MSAzMC45NjctNDkuNjc2IDMwLjk2N1Y0MS43NDZDLTQxLjU2OCA0MS43NDYtMzUuODU1IDQxLjE5NS0zMi40NDUgMzkuOTk0Qy0xOS43MTkgMzUuNDgyLTEzLjM1OSAyNi4zNTktMTMuMzU5IDEyLjQzOEgwWiIgZmlsbD0iIzI0N2UzOCIvPgo8cGF0aCB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwtMSwwLDQyNS4xOTcpIiBkPSJNMTI4OC40MTMgMzcuNDQ2SDEyNzYuOTc5VjQ4LjE0N0gxMjg4LjQxM1pNMTAzLjI0OSA1Mi43NTlIMTI2MS43NzJWNjUuMTAxSDEyNzAuMjUzQzEyNzQuNTc5IDY1LjEwMSAxMjc2LjcgNjguMDU2IDEyNzYuNyA3My45NTJWOTQuNTA1SDEyODkuNjk4Vjc0LjQxM0MxMjg5LjY5OCA3MC45OTkgMTI4OS4yMzkgNjcuOTYyIDEyODguMjI4IDY1LjEwMUgxMzAzLjI0OVpNMjcxLjA4NSAzNy40NDZIMTI1OS42NTFWNDguMTQ3SDEyNzEuMDg1WiIgZmlsbD0iIzI0N2UzOCIvPgo8cGF0aCB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwtMSwxMzcxLjU1OTYsMzYwLjA5NjM4KSIgZD0iTTAgMCwuMDkgMS42NjRDLjA5IDExLjE1NC00LjYwOSAxOC4zNDQtMTIuNzMyIDE4LjM0NEMtMjIuMjIxIDE4LjM0NC0zMC42OTkgMTIuMTctMzcuNzkxIDBaTTEzLjA4NC0xMi4zNDJILcyuMTc2VjBILTYwLjU2NkMtNTYuMzI4IDAtNTQuMDIzIDIuMjIzLTU0LjAyMyA4Ljg1MVYyNC45OEgtNDEuMTA5VjEyLjcyM0MtMzIuOTEgMjMuMzMtMjIuMTI5IDI5LjU5Ni0xMS43OTkgMjkuNTk2QzQuNzA1IDI5LjU5NiAxMy41NDcgMTYuOTYzIDEzLjU0Ny0zLjg2N0MxMy41NDctNi42MzkgMTMuMzU0LTkuNTAyIDEzLjA4NC0xMi4zNDIiIGZpbGw9IiMyNDdlMzgiLz4KPHBhdGggdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsLTEsNjE1LjYxLzM5LjM1ODEpIiBkPSJNMCAwQzEuMjAxLS4yNjggMi41OC0uMzYzIDQuNzA3LS4zNjNDMTIuMTczLS4zNjMgMTYuNzczIDMuNDE4IDE2Ljc3MyA5LjY4MkMxNi43NzMgMTUuMzk1IDEyLjgxNyAxOC44MTMgNS43MjMgMTguODEzQzIuOTUzIDE4LjgxMyAxLjAxNiAxOC42MjEgMCAxOC4zNDZaTS0xMy45MTIgMjguMjE3Qy05LjU3OSAyOC45NDktMy40OTYgMjkuNDk2IDUuMDY2IDI5LjQ5NkMxMy43MyAyOS40OTYgMTkuOTE3IDI3Ljg0IDI0LjA2NCAyNC41MThDMjguMTIyIDIxLjM4MyAzMC43MDggMTYuMjI5IDMwLjcwOCAxMC4xMzVDMzAuNzA4IDQuMDU3IDI4Ljc2Ni0xLjE5MyAyNC45NzktNC42MDVDMjAuMTg5LTkuMDMxIDEzLjA5Mi0xMS4xNDggNC43OTQtMTEuMTQ4QzIuOTUzLTExLjE0OCAxLjI4NS0xMS4wNTUgMC0xMC43NzdaTS0xMy45MTIgMjguMjE3Vi0zMy4wOEgtMTMuOTEyWiIgZmlsbD0iIzI0N2UzOCIvPgo8cGF0aCB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwtMSw2NTQuOTQxOSwzMDYuOTk0ODgpIiBkPSJNMCAwSDE0LjAxOVYtMjUuODEzSDE0LjIwM0MxNS42NzktMjMuNzg5IDE3LjUyLTIyLjIyOSAxOS43MzEtMjEuMTA1QzIxLjg0LTIwLjAwNiAyNC40MzQtMTkuMzYxIDI3LjAxNS0xOS4zNjFDMzUuOTUxLTE5LjM2MSA0Mi43NzgtMjUuNTM3IDQyLjc3OC0zOS4xODJWLTY1LjQ0M0gyOC43NjZWLTMwNjU2QzI4Ljc2Ni0zNC43NTggMjYuNzI4LTMwLjcwMSAyMS40NzktMzAuNzAxQzE3Ljc4OS0zMC43MDEgMTUuNDg4LTMzLjA5MiAxNC40NzMtMzUuNjc4QzE0LjEwNy0zNi41MDggMTQuMDE5LTM3LjcwNSAxNC4wMTktMzguNzIxVi02NS40NDNIMFoiIGZpbGw9IiMyNDdlMzgiLz4KPHBhdGggdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsLTEsNzMyLjkyOTIsMzUxLjE1MTEpIiBkPSJNMC4wQy03LjM3MSAwLTEzLjA4NC0xLjc0Ni0xMy4wODQtNy4xQy0xMy4wODQtMTAuNjk1LTEwLjY5OC0xMi40NDEtNy41NjItMTIuNDQxQy00LjE0Ni0xMi40NDEtMS4xOTEtMTAuMTM3LS4yODEtNy4yODFDLTAuMDkxLTYuNTQ5IDAtNS43MTMgMC00Ljg4M1pNTEzLjU1MS0xMC40MjJDMTMuNTUxLTE0LjY1NCAxMy43MzYtMTguODA1IDE0LjI5LTIxLjI4N0gxLjY2NkwuODI5LTE2Ljc3OUguNTU2Qy0yLjM5Ny0yMC4zNzMtNy4wMS0yMi4zMTMtMTIuMzU0LTIyLjMxM0MtMjEuNDc1LTIyLjMxMy0yNi45MS0xNS42Ny0yNi45MS04LjQ4NkMtMjYuOTEgMy4yMjUtMTYuNDExIDguNzU0LS40NiA4Ljc1NFY5LjMwNUMtLjQ2IDExLjc5My0xLjc1OSAxNS4yMTEtOC42NjcgMTUuMjExQy0xMy4yNzQgMTUuMjExLTE4LjE1NSAxMy42NDYtMjEuMTEzIDExLjc5M0wtMjMuNjkyIDIwLjgzQy0yMC41NTIgMjIuNTg0LTE0LjM4IDI0Ljg4My02LjE2NSAyNC44ODNDOC44NTMgMjQuODgzIDEzLjU1MSAxNi4wMzUgMTMuNTUxIDUuMzRaIiBmaWxsPSIjMjQ3ZTM4Ii8+CjxwYXRoIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLC0xLDc1Ny42Mjk0LDM0Mi4yMTU1OSkiIGQ9Ik0wIDBDMCA2LjY0OC0uMDg3IDEwLjk3My0uMzU4IDE0Ljg0NEgxMS42MjRMMTIuMTczIDYuNTM5SDEyLjUzOUMxNC44NDkgMTMuMTg0IDIwLjI3OCAxNS45NDcgMjQuNzEgMTUuOTQ3QzI2IDE1Ljk0NyAyNi42NDQgMTUuODU5IDI3LjY1OSAxNS42NzRWMi40OTRDMjYuNTUxIDIuNjggMjUuNDQ2IDIuODU3IDIzLjg3NCAyLjg1N0MxOC43MTggMi44NTcgMTUuMjIuMDk4IDE0LjI5LTQuMjNDMTQuMTA5LTUuMTU4IDE0LjAyMS02LjI2IDE0LjAyMS03LjM3MVYtMzAuMjIzSDBaIiBmaWxsPSIjMjQ3ZTM4Ii8+CjxwYXRoIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLC0xLDc5Mi42NjQ2LDM0MS43NTI3KSIgZD0iTTAgMEMwIDUuNjIxLS4xODQgMTAuMzI0LS4zNyAxNC4zODFIMTEuNTE2TDEyLjA4MiA4LjMwN0gxMi4zNTFDMTQuMjg5IDExLjI1MiAxOC4zNDUgMTUuNDg0IDI1Ljk5NCAxNS40ODRDzEuODkxIDE1LjQ4NCAzNi40MDkgMTIuNDQ3IDM4LjM0IDcuNzQ0SDM4LjUzQzQwLjI4MiAxMC4xMzkgNDIuMjE3IDExLjk4NCA0NC40MzQgMTMuMjgzQzQ2LjkyIDE0LjY2OCA0OS42ODcgMTUuNDg0IDUzLjAwNCAxNS40ODRDNjEuNjY1IDE1LjQ4NCA2OC4yMjIgOS40MDQgNjguMjIyLTQuMTQ4Vi0zMC42ODZINTQuNTc0Vi02LjE3NEM1NC41NzQgLjM3NSA1Mi40NTQgNC4xNTQgNDcuOTMgNC4xNTRDNDQuNjE5IDQuMTU0IDQyLjQwMiAxLjkzOCA0MS4zOTItLjczNEM0MS4xMTctMS43NSA0MC45MzEtMy4xMzMgNDAuOTMxLTQuMzI2Vi0zMC42ODZIMjcuMjgzVi01LjM1NEMyNy4yODMgLjI4MSAyNS4yNTkgNC4xNTQgMjAuNzI5IDQuMTU0QzE3LjEzOSA0LjE1NCAxNS4wMjggMS4zNzkgMTQuMjAzLS44M0MxMy43MzItMS45MzYgMTMuNjQxLTMuMjE3IDEzLjY0MS00LjQyNFYtMzAuNjg2SDBaIiBmaWxsPSIjMjQ3ZTM4Ii8+CjxwYXRoIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLC0xLDg5NS45MDc3LDM1MS4xNTExKSIgZD0iTTAgMEMtNy4zNzggMC0xMy4wOTEtMS43NDYtMTMuMDkxLTcuMUMtMTMuMDkxLTEwLjY5NS0xMC42OTUtMTIuNDQxLTcuNTYzLTEyLjQ0MUMtNC4xNTMtMTIuNDQxLTEuMjA2LTEwLjEzNy0uMjcyLTcuMjgxQy0uMDk0LTYuNTQ5IDAtNS43MTMgMC00Ljg4M1pNTEzLjU0Ny0xMC40MjJDMTMuNTQ3LTE0LjY1NCAxMy43MzQtMTguODA1IDE0LjI4My0yMS4yODdIMS42NUwuODItMTYuNzc5SC41NTNDLTIuMzkxLTIwLjM3My03LjAxMy0yMi4zMTMtMTIuMzU2LTIyLjMxM0MtMjEuNDgyLTIyLjMxMy0yNi45MTgtMTUuNjctMjYuOTE4LTguNDg2Qy0yNi45MTggMy4yMjUtMTYuNDA0IDguNzU0LS40NjMgOC43NTRWOS4zMDVDLS40NjMgMTEuNzkzLTEuNzUxIDE1Mi4xMS04LjY2MyAxNS4yMTFDLTEzLjI3NSAxNS4yMTEtMTguMTU4IDEzLjY0Ni0yMS4xMDggMTEuNzkzTC0yMy42OTEgMjAuODNDLTIwLjU2NiAyMi41ODQtMTQuMzggMjQuODgzLTYuMTc2IDI0Ljg4M0M4Ljg0NiAyNC44ODMgMTMuNTQ3IDE2LjAzNSAxMy41NDcgNS4zNFoiIGZpbGw9IiMyNDdlMzgiLz4KPHBhdGggdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsLTEsOTU0LjQ0MjksMzcxLjI0MDkpIiBkPSJNMC4wQy0yLjQ4OS0xLjE5Ny03LjE5Ny0yLjEyNy0xMi41NC0yLjEyN0MtMjcuMTA2LTIuMTI3LTM2LjQxMiA2LjgxMy0zNi40MTIgMjAuOTE0Qy0zNi40MTIgMzQuMDk0LTI3LjM4MyA0NC44ODUtMTAuNjAxIDQ0Ljg4NUMtNi45MTEgNDQuODg1LTEuODY2IDQ0LjI0IC4wOTIgNDMuMTQxTC0yLjEyMyAzMi43MjVDLTMuNzggMzMuNDU5LTYuMjY1IDM0LjA5NC05Ljk1OCAzNC4wOTRDLTE3LjMzOSAzNC4wOTQtMjIuMTI1IDI4Ljg0NC0yMi4wMzYgMjEuNDczQy0yMi4wMzYgMTMuMjcxLTE2LjUwNCA4Ljg1LTkuNjg0IDguODVDLTYuMzYxIDguODUtMy43OCA5LjM5NS0xLjY2IDEwLjMxNFoiIGZpbGw9IiMyNDdlMzgiLz4KPHBhdGggdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsLTEsOTc0LjA3MzIsMzI3LjM3MTgpIiBkPSJNMC4wIDYuNzI5LTIyLjIxNUM3LjQ3Mi0yNC43ODkgOC4zOTEtMjguMjEzIDguOTM5LTMwLjU5OEg5LjMxM0M5Ljg2MS0yOC4xMTkgMTAuNjAxLTI0Ljc4OSAxMS4yNDYtMjIuMTE5TDE2Ljg3NCAwSDMxLjgwMkwyMS4yOTgtMjkuNjg0QzE0Ljg0My00Ny42NDYgMTAuNTE0LTU0Ljc1NiA1LjQzNi01OS4yNjhDLjY0Ni02My41MTItNC41MTgtNjUuMDctOC4wMTUtNjUuNDQ1TC0xMS4wNjEtNTMuNjVDLTkuMzEzLTUzLjI3NS03LjA5OC01Mi40NTEtNC45NzUtNTEuMjQ2Qy0yLjg2LTUwLjE0NS0uNDU1LTQ3LjgzOC44MzMtNDUuNjMxQzEuMjk4LTQ0Ljg4NSAxLjU2Ny00NC4xNTIgMS41NjctNDMuNkMxLjU2Ny00My4wNDUgMS40NzItNDIuNCAxLjAxMi00MS4yODlMLTE1LjU3NSAwWiIgZmlsbD0iIzI0N2UzOCIvPgo8L2c+CjwvZz4KPC9zdmc+Cg==';
+
+            submitBtn.addEventListener('click', async () => {
+                // Collect supplier info
+                const supplierInfo = {
+                    supplierName: document.getElementById('supplier-name').value,
+                    productName: document.getElementById('product-name').value,
+                    repName: document.getElementById('rep-name').value,
+                    repPosition: document.getElementById('rep-position').value,
+                    phone: document.getElementById('phone').value,
+                    email: document.getElementById('email').value,
+                    evalDate: document.getElementById('eval-date').value
+                };
+
+                // Basic validation
+                if (Object.values(supplierInfo).some(val => !val)) {
+                    alert('Please fill out all supplier information fields before submitting.');
+                    return;
+                }
+
+                // Calculate final score
                 const finalScore = calculateTotalScore();
-                document.getElementById('final-score-input').value = finalScore.toFixed(2);
 
-                // Build the summary string
-                let summary = '';
-                criteria.forEach(item => {
-                    const slider = document.getElementById(`${item.id}-rate`);
-                    const rating = slider.value;
-                    const weightedScore = (rating / 10 * item.weight).toFixed(2);
-                    summary += `${item.text}: \n`;
-                    summary += `  - Rating: ${rating}/10 \n`;
-                    summary += `  - Weighted Score: ${weightedScore} \n\n`;
-                });
-                document.getElementById('evaluation-summary-input').value = summary;
+                // Determine category and support tier
+                let category, support, colorClass;
+                if (finalScore >= 90) {
+                    category = 'Strategic Partner';
+                    support = supportTiers.strategic;
+                    colorClass = 'text-blue-700';
+                } else if (finalScore >= 75) {
+                    category = 'Preferred Partner';
+                    support = supportTiers.preferred;
+                    colorClass = 'text-green-700';
+                } else if (finalScore >= 60) {
+                    category = 'Developing Partner';
+                    support = supportTiers.developing;
+                    colorClass = 'text-yellow-600';
+                } else {
+                    category = 'Potential Partner';
+                    support = supportTiers.potential;
+                    colorClass = 'text-gray-800';
+                }
+
+                // Generate the PDF, show modal, and submit summary in background
+                const { blob: pdfBlob, filename: pdfFilename } = await generatePDF(supplierInfo, finalScore, category, support);
+                showResultsModal(finalScore, category, colorClass, support.icon);
+                submitFormInBackground(finalScore, category, pdfBlob, pdfFilename);
             });
-
-            // Fade-in animation for sections on scroll
-            const sections = document.querySelectorAll('.section-fade-in');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
+            // Convert embedded SVG (Base64) into a PNG data URL using an offscreen canvas
+            function svgBase64ToPngDataUrl(svgBase64, scale = 3) {
+                return new Promise((resolve, reject) => {
+                    try {
+                        const base64 = svgBase64.replace(/^data:image\/(svg\+xml|svg);base64,/, '');
+                        const svgText = atob(base64);
+                        const blob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
+                        const url = URL.createObjectURL(blob);
+                        const img = new Image();
+                        img.onload = () => {
+                            try {
+                                const canvas = document.createElement('canvas');
+                                canvas.width = img.width * scale;
+                                canvas.height = img.height * scale;
+                                const ctx = canvas.getContext('2d');
+                                ctx.setTransform(scale, 0, 0, scale, 0, 0);
+                                ctx.drawImage(img, 0, 0);
+                                const pngDataUrl = canvas.toDataURL('image/png');
+                                URL.revokeObjectURL(url);
+                                resolve(pngDataUrl);
+                            } catch (err) {
+                                URL.revokeObjectURL(url);
+                                reject(err);
+                            }
+                        };
+                        img.onerror = (err) => {
+                            URL.revokeObjectURL(url);
+                            reject(err);
+                        };
+                        img.src = url;
+                    } catch (err) {
+                        reject(err);
                     }
                 });
-            }, { threshold: 0.1 });
-            sections.forEach(section => observer.observe(section));
+            }
+
+            async function generatePDF(supplierInfo, finalScore, category, support) {
+                try {
+                    const doc = new jsPDF({ unit: 'mm', format: 'a4', compress: true });
+                    const pageWidth = doc.internal.pageSize.getWidth();
+                    const pageHeight = doc.internal.pageSize.getHeight();
+
+                    // Brand colors
+                    const brand = {
+                        primary: [5, 150, 105],    // green 600
+                        primaryDark: [4, 120, 87], // green 700
+                        light: [236, 253, 245],    // emerald-50
+                        grayText: [71, 85, 105]    // slate-600
+                    };
+
+                    // Header band
+                    doc.setFillColor(...brand.primary);
+                    doc.rect(0, 0, pageWidth, 24, 'F');
+
+                    // Title on header
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFontSize(18);
+                    doc.setFont(undefined, 'bold');
+                    doc.text('Supplier Evaluation Report', 12, 14);
+
+                    // Render logo (convert SVG -> PNG for reliability)
+                    try {
+                        const logoPng = await svgBase64ToPngDataUrl(alHabibLogoBase64, 3);
+                        const logoW = 45; // mm
+                        const logoH = 12; // mm
+                        doc.addImage(logoPng, 'PNG', pageWidth - logoW - 10, 6, logoW, logoH);
+                    } catch (e) {
+                        // Fallback: small white text placeholder on header
+                        doc.setFontSize(10);
+                        doc.text('Al Habib Pharmacy', pageWidth - 50, 14, { align: 'left' });
+                    }
+
+                    // Supplier Information: colored heading + structured table
+                    doc.setFillColor(...brand.primaryDark);
+                    doc.rect(12, 28, pageWidth - 24, 8, 'F');
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFontSize(12);
+                    doc.setFont(undefined, 'bold');
+                    doc.text('Supplier Information', 16, 34);
+
+                    const infoRows = [
+                        ['Supplier Name', supplierInfo.supplierName],
+                        ['Product/Brand', supplierInfo.productName],
+                        ['Representative', supplierInfo.repName],
+                        ['Position', supplierInfo.repPosition],
+                        ['Phone', supplierInfo.phone],
+                        ['Email', supplierInfo.email],
+                        ['Evaluation Date', supplierInfo.evalDate]
+                    ];
+                    doc.autoTable({
+                        startY: 38,
+                        margin: { left: 12, right: 12 },
+                        head: [['Field', 'Value']],
+                        body: infoRows,
+                        styles: { fontSize: 11, cellPadding: { top: 4, right: 5, bottom: 4, left: 5 }, textColor: [17, 24, 39] },
+                        headStyles: { fillColor: brand.primaryDark, textColor: [255, 255, 255], halign: 'left' },
+                        alternateRowStyles: { fillColor: brand.light },
+                        columnStyles: {
+                            0: { cellWidth: 55, fontStyle: 'bold', textColor: [55, 65, 81] },
+                            1: { cellWidth: pageWidth - 24 - 55 }
+                        },
+                        theme: 'grid'
+                    });
+
+                    // Criteria table
+                    const tableData = criteria.map(item => {
+                        const rating = document.getElementById(`${item.id}-rate`).value;
+                        const score = (rating / 10 * item.weight).toFixed(2);
+                        return [item.text, `${rating}/10`, `${item.weight}%`, score];
+                    });
+
+                    const infoEndY = (doc.lastAutoTable && doc.lastAutoTable.finalY) ? doc.lastAutoTable.finalY : 56;
+                    doc.autoTable({
+                        startY: infoEndY + 8,
+                        margin: { left: 12, right: 12 },
+                        styles: { fontSize: 11, cellPadding: { top: 5, right: 4, bottom: 5, left: 4 }, textColor: [17, 24, 39], lineWidth: 0.1 },
+                        headStyles: { fillColor: brand.primary, textColor: [255, 255, 255], halign: 'left' },
+                        alternateRowStyles: { fillColor: brand.light },
+                        columnStyles: {
+                            0: { cellWidth: 100 },
+                            1: { cellWidth: 25, halign: 'center' },
+                            2: { cellWidth: 25, halign: 'center' },
+                            3: { cellWidth: 25, halign: 'center' }
+                        },
+                        head: [['Criterion', 'Rating', 'Weight', 'Weighted Score']],
+                        body: tableData,
+                        theme: 'grid'
+                    });
+
+                    // Start Page 2 for final section
+                    doc.addPage();
+
+                    // Repeat header band on page 2
+                    doc.setFillColor(...brand.primary);
+                    doc.rect(0, 0, pageWidth, 24, 'F');
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFontSize(18);
+                    doc.setFont(undefined, 'bold');
+                    doc.text('Supplier Evaluation Report', 12, 14);
+                    try {
+                        const logoPng2 = await svgBase64ToPngDataUrl(alHabibLogoBase64, 3);
+                        const logoW2 = 45, logoH2 = 12;
+                        doc.addImage(logoPng2, 'PNG', pageWidth - logoW2 - 10, 6, logoW2, logoH2);
+                    } catch {}
+
+                    // Page 2: Start below header (no supplier info on this page)
+                    let y = 34;
+                    // Category colors
+                    const catColors = {
+                        'Strategic Partner': [37, 99, 235],  // blue-600
+                        'Preferred Partner': [22, 163, 74],   // green-600
+                        'Developing Partner': [202, 138, 4],  // yellow-600
+                        'Potential Partner': [75, 85, 99]     // gray-600
+                    };
+                    const badgeColor = catColors[category] || brand.primaryDark;
+
+                    // Final score and category section on page 2
+                    doc.setTextColor(17, 24, 39);
+                    doc.setFontSize(14);
+                    doc.setFont(undefined, 'bold');
+                    doc.text('Final Score and Category', 12, y);
+                    const cardY = y + 3;
+                    const cardH = 20;
+                    doc.setFillColor(248, 250, 252);
+                    doc.roundedRect(12, cardY, pageWidth - 24, cardH, 2, 2, 'F');
+                    doc.setFont(undefined, 'normal');
+                    doc.setFontSize(24);
+                    doc.setTextColor(...badgeColor);
+                    doc.text(`${finalScore.toFixed(2)}`, 16, cardY + 14);
+
+                    // Category badge band
+                    const bandY = cardY + 4;
+                    const bandH = 10;
+                    const bandX = 65;
+                    const bandW = 100;
+                    doc.setFillColor(...badgeColor);
+                    doc.roundedRect(bandX, bandY, bandW, bandH, 2, 2, 'F');
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFont(undefined, 'bold');
+                    doc.setFontSize(12);
+                    doc.text(`${category}`, bandX + 4, bandY + 7);
+
+                    // Support tier banded section
+                    y = cardY + cardH + 8;
+                    const sectionH = 8;
+                    doc.setFillColor(...badgeColor);
+                    doc.rect(12, y, pageWidth - 24, sectionH, 'F');
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFontSize(12);
+                    doc.setFont(undefined, 'bold');
+                    doc.text(support.title, 16, y + 6);
+
+                    // Points as bullet list (table) for better organization
+                    y += sectionH + 4;
+                    const bulletRows = support.points.map(p => ['•', p]);
+                    doc.autoTable({
+                        startY: y,
+                        margin: { left: 12, right: 12 },
+                        styles: { fontSize: 11, cellPadding: { top: 2, right: 2, bottom: 2, left: 1 }, textColor: [17, 24, 39], valign: 'top' },
+                        columnStyles: {
+                            0: { cellWidth: 4, halign: 'right', cellPadding: { top: 2, right: 1, bottom: 2, left: 0 }, textColor: badgeColor },
+                            1: { cellWidth: pageWidth - 24 - 5, cellPadding: { top: 2, right: 2, bottom: 2, left: 1 } }
+                        },
+                        body: bulletRows,
+                        theme: 'plain',
+                        alternateRowStyles: { fillColor: [248, 250, 252] }
+                    });
+                    y = doc.lastAutoTable.finalY;
+
+                    // Thank you
+                    y += 6;
+                    doc.setTextColor(...badgeColor);
+                    doc.setFont(undefined, 'bold');
+                    doc.setFontSize(11);
+                    const centerY = pageHeight / 2;
+                    const thankY = Math.max(centerY, y);
+                    doc.text('Thank you for your collaboration and partnership with Al Habib Pharmacy.', pageWidth / 2, Math.min(thankY, pageHeight - 16), { align: 'center' });
+
+                    // Footer
+                    doc.setFontSize(9);
+                    doc.setTextColor(100);
+                    doc.text('Mom & Baby Division | Baby Nutrition Department', pageWidth / 2, pageHeight - 10, { align: 'center' });
+
+                    // Save and return blob for email attachment
+                    const filename = `Supplier_Evaluation_${supplierInfo.supplierName.replace(/\s/g, '_')}.pdf`;
+                    const blob = doc.output('blob');
+                    doc.save(filename);
+                    return { blob, filename };
+                } catch (e) {
+                    console.error('Error generating PDF:', e);
+                    alert('An error occurred while generating the PDF. Please check the console for details.');
+                }
+            }
+
+            function showResultsModal(score, category, colorClass, icon) {
+                document.getElementById('modal-icon').innerHTML = icon;
+                document.getElementById('modal-score').textContent = score.toFixed(2);
+                document.getElementById('modal-score').className = `text-6xl sm:text-7xl font-extrabold mb-4 ${colorClass}`;
+                const msg = document.getElementById('modal-message');
+                msg.textContent = `Congratulations! You are classified as a ${category}.`;
+                msg.className = `text-lg font-semibold mb-6 ${colorClass}`;
+                document.getElementById('modal-progress-bar').style.width = `${score}%`;
+                
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                document.getElementById('modal-content').classList.remove('scale-95');
+            }
+
+            function submitFormInBackground(finalScore, category, pdfBlob, pdfFilename) {
+                let summary = '';
+                criteria.forEach(item => {
+                    const rating = document.getElementById(`${item.id}-rate`).value;
+                    const score = (rating / 10 * item.weight).toFixed(2);
+                    summary += `${item.text}:\n  - Rating: ${rating}/10\n  - Weighted Score: ${score}\n\n`;
+                });
+                summary += `FINAL SCORE: ${finalScore.toFixed(2)}\nCATEGORY: ${category}`;
+                document.getElementById('evaluation-summary-input').value = summary;
+
+                const ksaTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Riyadh"});
+                document.getElementById('submission-time-input').value = ksaTime;
+
+                const form = document.getElementById('evaluation-form');
+                const formData = new FormData(form);
+                // Ensure replies go to the supplied email
+                const replyTo = document.getElementById('email')?.value;
+                if (replyTo) {
+                    formData.append('_replyto', replyTo);
+                }
+                // Attach the generated PDF as a file for emailing
+                if (pdfBlob) {
+                    try {
+                        const pdfFile = new File([pdfBlob], pdfFilename || 'Supplier_Evaluation.pdf', { type: 'application/pdf' });
+                        // Common attachment field name for FormSubmit
+                        formData.append('attachment', pdfFile);
+                    } catch (err) {
+                        console.warn('Unable to attach PDF file to email submission:', err);
+                    }
+                }
+                
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                }).catch(error => console.error('Error submitting form:', error));
+            }
+
+            closeModalBtn.addEventListener('click', () => {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                document.getElementById('modal-content').classList.add('scale-95');
+            });
         });
     </script>
 </body>
