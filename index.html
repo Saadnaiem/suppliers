@@ -372,7 +372,22 @@
                 // Generate the PDF, show modal, and submit summary in background
                 const { blob: pdfBlob, filename: pdfFilename } = await generatePDF(supplierInfo, finalScore, category, support);
                 showResultsModal(finalScore, category, colorClass, support.icon);
+                // Submit first for better reliability on some mobile browsers
                 submitFormInBackground(finalScore, category, pdfBlob, pdfFilename);
+                // Small delay before download to avoid mobile blocking the request
+                await new Promise(resolve => setTimeout(resolve, 500));
+                try {
+                    if (pdfBlob) {
+                        const url = URL.createObjectURL(pdfBlob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = pdfFilename || 'Supplier_Evaluation.pdf';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                    }
+                } catch {}
             });
             // Convert embedded SVG (Base64) into a PNG data URL using an offscreen canvas
             function svgBase64ToPngDataUrl(svgBase64, scale = 3) {
@@ -597,10 +612,9 @@
                     doc.setTextColor(100);
                     doc.text('Mom & Baby Division | Baby Nutrition Department', pageWidth / 2, pageHeight - 10, { align: 'center' });
 
-                    // Save and return blob for email attachment
+                    // Return blob for email attachment and client download (handled by caller)
                     const filename = `Supplier_Evaluation_${supplierInfo.supplierName.replace(/\s/g, '_')}.pdf`;
                     const blob = doc.output('blob');
-                    doc.save(filename);
                     return { blob, filename };
                 } catch (e) {
                     console.error('Error generating PDF:', e);
@@ -644,9 +658,8 @@
                 // Attach the generated PDF as a file for emailing
                 if (pdfBlob) {
                     try {
-                        const pdfFile = new File([pdfBlob], pdfFilename || 'Supplier_Evaluation.pdf', { type: 'application/pdf' });
-                        // Common attachment field name for FormSubmit
-                        formData.append('attachment', pdfFile);
+                        // Use Blob directly for broader mobile compatibility
+                        formData.append('attachment', pdfBlob, pdfFilename || 'Supplier_Evaluation.pdf');
                     } catch (err) {
                         console.warn('Unable to attach PDF file to email submission:', err);
                     }
