@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mom & Baby Supplier Evaluation - Al Habib Pharmacy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Lighter gray */
+        }
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+        }
+        .btn-primary {
+            background-color: #059669; /* Green to match the theme */
+            color: white;
+            transition: all 0.3s ease-in-out;
+            transform: translateY(0);
+        }
+        .btn-primary:hover {
+            background-color: #047857;
+            box-shadow: 0 7px 15px rgba(5, 150, 105, 0.25);
+            transform: translateY(-2px);
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            /* background is now set by JavaScript */
+            border-radius: 5px;
+            outline: none;
+            transition: background 0.1s ease-in-out;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #059669; /* Green thumb */
+            cursor: pointer;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            filter: invert(0.5) sepia(1) saturate(5) hue-rotate(120deg);
+        }
+        #results-modal {
+            transition: opacity 0.3s ease;
+        }
+        .modal-gradient {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+        }
+        .section-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section-fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0">
+                     <img src="https://alhabibpharmacy.com/static/images/new-logo@text.svg" alt="Al Habib Pharmacy Logo" class="h-10 sm:h-12 mr-4" onerror="this.onerror=null;this.src='https://placehold.co/150x50?text=Al+Habib+Pharmacy';">
+                </div>
+                <div class="text-right">
+                    <p class="text-sm sm:text-base font-bold text-green-700 uppercase">MOM AND BABY DIVISION</p>
+                    <p class="text-xs sm:text-sm text-gray-500">BABY NUTRITION DEPARTMENT</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto p-4 sm:p-6 lg:px-8 max-w-5xl">
+        
+        <!-- Hero Section -->
+        <section id="hero" class="text-center my-8 md:my-12 section-fade-in">
+            <div class="w-full h-64 sm:h-80 rounded-2xl mb-8 shadow-2xl flex items-center justify-center bg-gradient-to-r from-green-500 to-green-700 p-4">
+                <h1 class="text-white text-5xl sm:text-6xl md:text-8xl font-extrabold tracking-tight uppercase" style="text-shadow: 3px 3px 10px rgba(0,0,0,0.2);">
+                    Baby Nutrition
+                </h1>
+            </div>
+            <h2 class="text-3xl md:text-5xl font-extrabold text-gray-800 mb-2">Supplier Collaboration Portal</h2>
+            <p class="text-base md:text-lg text-gray-500 max-w-3xl mx-auto">Evaluating partnerships to build a healthier future for moms and babies together.</p>
+        </section>
+
+        <!-- Vision and Mission Section -->
+        <section id="commitment" class="card p-6 sm:p-8 my-12 section-fade-in">
+            <h3 class="text-2xl md:text-3xl font-bold text-gray-700 mb-6 border-b pb-4 flex items-center">
+                <svg class="w-8 h-8 mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m0 18a9 9 0 009-9m-9 9a9 9 0 00-9-9"></path></svg>
+                Our Commitment
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="text-xl font-bold text-green-700 mb-2">Our Vision</h4>
+                    <p class="text-gray-600">To be the most trusted partner for every family's journey, empowering parents with the highest quality products and compassionate support from pregnancy through early childhood.</p>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold text-green-700 mb-2">Our Mission</h4>
+                    <p class="text-gray-600">To meticulously curate and provide the safest, most scientifically advanced nutrition for infants and toddlers. We seek powerful collaborations with innovative suppliers who share our unwavering commitment to quality and transparency. <span class="font-semibold">Join us in this vital mission.</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Supplier Information Form -->
+        <section id="information" class="card p-6 sm:p-8 my-12 section-fade-in">
+            <h3 class="text-2xl md:text-3xl font-bold text-gray-700 mb-6 border-b pb-4 flex items-center">
+                <svg class="w-8 h-8 mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                1. Supplier Information
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="supplier-name" class="block text-sm font-medium text-gray-600 mb-1">Supplier Name</label>
+                    <input type="text" id="supplier-name" placeholder="e.g., Global Baby Care Inc." class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                </div>
+                <div>
+                    <label for="product-name" class="block text-sm font-medium text-gray-600 mb-1">Product Name / Brand</label>
+                    <input type="text" id="product-name" placeholder="e.g., NutriGrow Formula" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                </div>
+                <div>
+                    <label for="rep-name" class="block text-sm font-medium text-gray-600 mb-1">Representative Name</label>
+                    <input type="text" id="rep-name" placeholder="e.g., Jane Doe" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                </div>
+                <div>
+                    <label for="rep-position" class="block text-sm font-medium text-gray-600 mb-1">Representative Position</label>
+                    <input type="text" id="rep-position" placeholder="e.g., Key Account Manager" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                </div>
+                <div class="md:col-span-2">
+                    <label for="eval-date" class="block text-sm font-medium text-gray-600 mb-1">Evaluation Date</label>
+                    <input type="date" id="eval-date" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                </div>
+            </div>
+        </section>
+        
+        <!-- Evaluation Form -->
+        <main id="evaluation" class="card p-6 sm:p-8 my-12 section-fade-in">
+            <h3 class="text-2xl md:text-3xl font-bold text-gray-700 mb-2 flex items-center">
+                 <svg class="w-8 h-8 mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M12 8h.01M15 8h.01M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"></path></svg>
+                2. Evaluation Criteria
+            </h3>
+            <p class="text-gray-500 mb-8 ml-11">Please rate your company's performance for each criterion on a scale of 1 to 10.</p>
+            
+            <div id="evaluation-criteria" class="space-y-6"></div>
+
+            <!-- Submit Button -->
+            <div class="mt-10 pt-6 border-t border-gray-200 text-center">
+                <button id="submit-btn" class="btn-primary font-bold py-4 px-12 text-lg rounded-full shadow-lg">
+                    Calculate Score & Download Report
+                </button>
+            </div>
+        </main>
+        
+        <footer class="text-center mt-10 text-gray-400 text-sm section-fade-in">
+            <p>&copy; Al Habib Pharmacy. All Rights Reserved.</p>
+            <p>Mom & Baby Division | Baby Nutrition Department</p>
+        </footer>
+    </div>
+
+    <!-- Results Modal -->
+    <div id="results-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none">
+        <div id="modal-content" class="modal-gradient rounded-2xl shadow-2xl p-8 max-w-md w-full text-center transform scale-95 transition-all duration-300">
+            <div id="modal-icon" class="mx-auto mb-4"></div>
+            <h2 id="modal-title" class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Evaluation Complete!</h2>
+            <p class="text-gray-500 mb-4">Your final collaboration score is:</p>
+            <p id="modal-score" class="text-6xl sm:text-7xl font-extrabold mb-4"></p>
+            <div class="w-full bg-white/50 rounded-full h-5 mb-4 shadow-inner">
+                <div id="modal-progress-bar" class="bg-gradient-to-r from-green-400 to-emerald-600 h-5 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+            </div>
+            <p id="modal-message" class="text-lg font-medium text-gray-600 mb-6"></p>
+            <button id="close-modal-btn" class="bg-white text-gray-700 font-bold py-2 px-6 rounded-full hover:bg-gray-100 transition shadow-md">Close</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const criteria = [
+                { id: 'promo', text: 'Promotional Activities & Trade Support', weight: 25, explanation: 'Rate your ability to create high-impact promotions, provide strong financial backing, and demonstrably increase overall category sales.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-2.236 9.168-5.584C18.35 0 18.68 0 19 0v12a5.002 5.002 0 01-5 5h-1.064M15 17l-4 4" /></svg>` },
+                { id: 'marketing', text: 'Marketing Support (In-store & Online)', weight: 20, explanation: 'Evaluate your excellence in creating engaging in-store displays, driving digital traffic, and executing effective shopper education campaigns.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>` },
+                { id: 'sales', text: 'Category Sales & Profitability Contribution', weight: 25, explanation: 'Assess your contribution to our mutual growth through strong sales, healthy profit margins, and a consistent positive year-over-year trend.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-3.75-.625m3.75.625V3.375" /></svg>` },
+                { id: 'partnership', text: 'Partnership & Long-term Relationship', weight: 15, explanation: 'Gauge your commitment to a true partnership through collaborative business planning, open data sharing, and alignment with our long-term strategic goals.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21a6 6 0 00-9-5.197m0 0A4.995 4.995 0 0012 12.5a4.995 4.995 0 00-3-1.354M12 12.5a4 4 0 110-5.292" /></svg>` },
+                { id: 'innovation', text: 'Innovation & FTM Launches', weight: 10, explanation: 'Score your pipeline of impactful new products and your ability to provide us with exclusive or first-to-market advantages that excite customers.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311l-3.75 0m3.75-7.478c.097-.57.097-1.156 0-1.726m0 0c.298-.678.648-1.32 1.04-1.908m-1.04 1.908c-.392-.588-.742-1.23-.1.04-1.908M12 18.75v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311l-3.75 0" /></svg>` },
+                { id: 'supply', text: 'Supply Reliability (SLAs)', weight: 5, explanation: 'Rate your operational excellence in consistently meeting delivery timelines, ensuring order accuracy, and preventing out-of-stock situations.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l2-2h8a1 1 0 001-1zM21 12v-2a1 1 0 00-1-1h-4a1 1 0 00-1 1v2m0 0h-4a2 2 0 00-2 2v2a2 2 0 002 2h4a2 2 0 002-2v-2z" /></svg>` }
+            ];
+
+            const container = document.getElementById('evaluation-criteria');
+            criteria.forEach(item => {
+                const criterionHTML = `
+                    <div class="p-4 rounded-lg hover:bg-gray-50/50 transition-colors border border-gray-200">
+                        <div class="flex items-start mb-4">
+                            <div class="flex-shrink-0">${item.icon}</div>
+                            <div>
+                                <label for="${item.id}-rate" class="font-bold text-lg text-green-700">${item.text}</label>
+                                <p class="text-base text-gray-600 mt-1">${item.explanation}</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-12 gap-x-4 gap-y-2 items-center">
+                            <div class="col-span-12 sm:col-span-7 md:col-span-8 flex items-center">
+                                <input type="range" id="${item.id}-rate" data-weight="${item.weight}" min="1" max="10" value="5" class="w-full supplier-rate mr-4">
+                                <span id="${item.id}-value" class="w-8 text-center font-bold text-green-600 text-lg">5</span>
+                            </div>
+                            <div class="col-span-6 sm:col-span-2 md:col-span-2 text-center">
+                                <p class="text-xs text-gray-500">Weight</p>
+                                <p class="font-bold text-base">${item.weight}%</p>
+                            </div>
+                            <div class="col-span-6 sm:col-span-3 md:col-span-2 text-center">
+                                <p class="text-xs text-gray-500">Score</p>
+                                <p id="${item.id}-score" class="font-bold text-base text-green-700">0.00</p>
+                            </div>
+                        </div>
+                    </div>`;
+                container.innerHTML += criterionHTML;
+            });
+
+            const sliders = document.querySelectorAll('.supplier-rate');
+            
+            function calculateTotalScore() {
+                let totalScore = 0;
+                sliders.forEach(slider => {
+                    const value = parseInt(slider.value);
+                    const weight = parseInt(slider.dataset.weight);
+                    totalScore += (value / 10) * weight;
+                });
+                return totalScore;
+            }
+
+            function updateSliderFill(slider) {
+                const value = slider.value;
+                const min = slider.min || 1;
+                const max = slider.max || 10;
+                const percentage = ((value - min) / (max - min)) * 100;
+                const darkGreen = '#047857';
+                const lightGreen = '#dcfce7';
+                slider.style.background = `linear-gradient(to right, ${darkGreen} ${percentage}%, ${lightGreen} ${percentage}%)`;
+            }
+
+            function updateScores() {
+                sliders.forEach(slider => {
+                    const id = slider.id.replace('-rate', '');
+                    const value = parseInt(slider.value);
+                    document.getElementById(`${id}-value`).textContent = value;
+                    const weight = parseInt(slider.dataset.weight);
+                    const weightedScore = (value / 10) * weight;
+                    document.getElementById(`${id}-score`).textContent = weightedScore.toFixed(2);
+                    updateSliderFill(slider);
+                });
+            }
+            
+            sliders.forEach(slider => {
+                slider.addEventListener('input', updateScores);
+            });
+
+            updateScores(); // Initial call to set scores and slider fills on load
+
+            // Modal and Submission Logic
+            const submitBtn = document.getElementById('submit-btn');
+            const modal = document.getElementById('results-modal');
+            const modalContent = document.getElementById('modal-content');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+
+            submitBtn.addEventListener('click', () => {
+                const supplierInfo = {
+                    supplierName: document.getElementById('supplier-name').value,
+                    productName: document.getElementById('product-name').value,
+                    repName: document.getElementById('rep-name').value,
+                    repPosition: document.getElementById('rep-position').value,
+                    evalDate: document.getElementById('eval-date').value
+                };
+
+                if (!supplierInfo.supplierName || !supplierInfo.productName || !supplierInfo.repName || !supplierInfo.repPosition || !supplierInfo.evalDate) {
+                    alert('Please fill out all supplier information fields before submitting.');
+                    return;
+                }
+
+                const finalScore = calculateTotalScore();
+                let csvContent = "data:text/csv;charset=utf-8,";
+                const headers = ["Evaluation Date", "Supplier Name", "Product Name", "Representative Name", "Representative Position", "Criterion", "Weight (%)", "Supplier Rate (1-10)", "Weighted Score", "Final Score"];
+                csvContent += headers.join(",") + "\r\n";
+                
+                let firstRow = true;
+                criteria.forEach(item => {
+                    const rate = document.getElementById(`${item.id}-rate`).value;
+                    const score = (rate / 10 * item.weight).toFixed(2);
+                    const row = [
+                        supplierInfo.evalDate,
+                        `"${supplierInfo.supplierName}"`,
+                        `"${supplierInfo.productName}"`,
+                        `"${supplierInfo.repName}"`,
+                        `"${supplierInfo.repPosition}"`,
+                        `"${item.text}"`,
+                        item.weight,
+                        rate,
+                        score,
+                        firstRow ? finalScore.toFixed(2) : '' // Only add final score to the first data row
+                    ];
+                    csvContent += row.join(",") + "\r\n";
+                    firstRow = false;
+                });
+
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", `Supplier_Evaluation_${supplierInfo.supplierName.replace(/[\s,]+/g, '_')}_${supplierInfo.evalDate}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showResultsModal(finalScore);
+            });
+
+            function showResultsModal(score) {
+                const modalIcon = document.getElementById('modal-icon');
+                const modalScore = document.getElementById('modal-score');
+                const modalMessage = document.getElementById('modal-message');
+                const modalProgressBar = document.getElementById('modal-progress-bar');
+                
+                modalScore.textContent = score.toFixed(2);
+                
+                setTimeout(() => {
+                   modalProgressBar.style.width = `${score}%`;
+                }, 100);
+
+                let iconHtml = '';
+                let message = '';
+                let colorClass = '';
+
+                if (score >= 90) {
+                    iconHtml = `<svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-yellow-400 mx-auto" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>`;
+                    message = "Outstanding Performance! You are a Gold-tier partner.";
+                    colorClass = 'text-yellow-500';
+                } else if (score >= 75) {
+                    iconHtml = `<svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-gray-400 mx-auto" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>`;
+                    message = "Excellent Work! You are a Silver-tier partner.";
+                    colorClass = 'text-gray-500';
+                } else if (score >= 60) {
+                     iconHtml = `<svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-orange-400 mx-auto" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>`;
+                    message = "Solid Contribution! You are a Bronze-tier partner.";
+                    colorClass = 'text-orange-500';
+                } else {
+                     iconHtml = `<svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-gray-600 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
+                    message = "Thank you for your submission. We appreciate your partnership.";
+                    colorClass = 'text-gray-700';
+                }
+                modalIcon.innerHTML = iconHtml;
+                modalScore.className = `text-6xl sm:text-7xl font-extrabold mb-4 ${colorClass}`;
+                modalMessage.textContent = message;
+
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modalContent.classList.remove('scale-95');
+            }
+
+            closeModalBtn.addEventListener('click', () => {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                modalContent.classList.add('scale-95');
+            });
+
+            // Fade-in animation for sections on scroll
+            const sections = document.querySelectorAll('.section-fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(section => observer.observe(section));
+        });
+    </script>
+</body>
+</html>
+
