@@ -379,8 +379,8 @@
                 showResultsModal(finalScore, category, colorClass, support.icon);
                 // Submit first for better reliability on some mobile browsers
                 await submitFormInBackground(finalScore, category, pdfBlob, pdfFilename);
-                // Small delay before download to avoid mobile blocking the request
-                await new Promise(resolve => setTimeout(resolve, 500));
+                // Slightly longer delay before download for mobile radios
+                await new Promise(resolve => setTimeout(resolve, 1200));
                 try {
                     if (pdfBlob) {
                         const url = URL.createObjectURL(pdfBlob);
@@ -394,8 +394,8 @@
                     }
                 } catch {}
             });
-            // Convert embedded SVG (Base64) into a PNG data URL using an offscreen canvas
-            function svgBase64ToPngDataUrl(svgBase64, scale = 3) {
+            // Convert embedded SVG (Base64) into a raster data URL using an offscreen canvas
+            function svgBase64ToRasterDataUrl(svgBase64, scale = 2, mime = 'image/jpeg', quality = 0.85) {
                 return new Promise((resolve, reject) => {
                     try {
                         const base64 = svgBase64.replace(/^data:image\/(svg\+xml|svg);base64,/, '');
@@ -411,9 +411,9 @@
                                 const ctx = canvas.getContext('2d');
                                 ctx.setTransform(scale, 0, 0, scale, 0, 0);
                                 ctx.drawImage(img, 0, 0);
-                                const pngDataUrl = canvas.toDataURL('image/png');
+                                const dataUrl = canvas.toDataURL(mime, quality);
                                 URL.revokeObjectURL(url);
-                                resolve(pngDataUrl);
+                                resolve(dataUrl);
                             } catch (err) {
                                 URL.revokeObjectURL(url);
                                 reject(err);
@@ -454,12 +454,14 @@
                     doc.setFont(undefined, 'bold');
                     doc.text('Supplier Evaluation Report', 12, 14);
 
-                    // Render logo (convert SVG -> PNG for reliability)
+                    // Render logo (convert SVG -> JPEG for smaller PDF) and reuse on both pages
                     try {
-                        const logoPng = await svgBase64ToPngDataUrl(alHabibLogoBase64, 3);
-                        const logoW = 45; // mm
-                        const logoH = 12; // mm
-                        doc.addImage(logoPng, 'PNG', pageWidth - logoW - 10, 6, logoW, logoH);
+                        const logoDataUrl = await svgBase64ToRasterDataUrl(alHabibLogoBase64, 2, 'image/jpeg', 0.85);
+                        const logoW = 38; // mm
+                        const logoH = 10; // mm
+                        doc.addImage(logoDataUrl, 'JPEG', pageWidth - logoW - 10, 6, logoW, logoH);
+                        // store for page 2
+                        doc.__logoDataUrl = logoDataUrl;
                     } catch (e) {
                         // Fallback: small white text placeholder on header
                         doc.setFontSize(10);
@@ -534,9 +536,9 @@
                     doc.setFont(undefined, 'bold');
                     doc.text('Supplier Evaluation Report', 12, 14);
                     try {
-                        const logoPng2 = await svgBase64ToPngDataUrl(alHabibLogoBase64, 3);
-                        const logoW2 = 45, logoH2 = 12;
-                        doc.addImage(logoPng2, 'PNG', pageWidth - logoW2 - 10, 6, logoW2, logoH2);
+                        const logoW2 = 38, logoH2 = 10;
+                        const data2 = doc.__logoDataUrl || await svgBase64ToRasterDataUrl(alHabibLogoBase64, 2, 'image/jpeg', 0.85);
+                        doc.addImage(data2, 'JPEG', pageWidth - logoW2 - 10, 6, logoW2, logoH2);
                     } catch {}
 
                     // Page 2: Start below header (no supplier info on this page)
@@ -691,34 +693,35 @@
                     }
                 }
                 
-                // Prefer standard endpoint (better for attachments), then fallback to AJAX if blocked
+                // Try AJAX endpoint first (CORS with JSON), then fallback to standard (no-cors)
+                // Add a trivial field to avoid some proxies stripping near-empty multipart bodies
+                formData.append('meta_note', 'supplier_evaluation_pdf_attached');
                 const controller = new AbortController();
                 const t = setTimeout(() => controller.abort(), 15000);
                 try {
-                    await fetch(form.action, {
+                    const ajaxUrl = form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/');
+                    const res = await fetch(ajaxUrl, {
                         method: 'POST',
                         body: formData,
-                        mode: 'no-cors',
                         signal: controller.signal,
-                        // no headers: browser will set multipart/form-data boundary for FormData
-                        referrerPolicy: 'no-referrer'
+                        headers: { 'Accept': 'application/json' }
                     });
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
                     const emailStatus = document.getElementById('email-status');
                     if (emailStatus) emailStatus.textContent = 'Report submitted. Please check your inbox (or spam) shortly.';
                 } catch (err) {
-                    console.warn('Standard submit failed, trying AJAX endpoint as fallback...', err);
+                    console.warn('AJAX submit failed; trying standard endpoint (no-cors)…', err);
                     try {
-                        const ajaxUrl = form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/');
-                        const res = await fetch(ajaxUrl, {
+                        await fetch(form.action, {
                             method: 'POST',
                             body: formData,
-                            headers: { 'Accept': 'application/json' }
+                            mode: 'no-cors',
+                            referrerPolicy: 'no-referrer'
                         });
-                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
                         const emailStatus = document.getElementById('email-status');
-                        if (emailStatus) emailStatus.textContent = 'Report submitted (fallback). Check your inbox in a moment.';
+                        if (emailStatus) emailStatus.textContent = 'Report submitted (fallback). Please check your inbox shortly.';
                     } catch (err2) {
-                        console.error('AJAX fallback failed:', err2);
+                        console.error('Standard no-cors submit failed:', err2);
                         const emailStatus = document.getElementById('email-status');
                         if (emailStatus) emailStatus.textContent = 'Could not send email. Please try again later.';
                     }
