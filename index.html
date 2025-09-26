@@ -97,6 +97,7 @@
             </div>
             <h2 class="text-3xl md:text-5xl font-extrabold text-gray-800 mb-2">Supplier Collaboration Portal</h2>
             <p class="text-base md:text-lg text-gray-500 max-w-3xl mx-auto">Evaluating partnerships to build a healthier future for moms and babies together.</p>
+            <p class="text-lg md:text-xl font-bold text-green-700 max-w-3xl mx-auto mt-2">“Driving Growth Through Partnership”</p>
         </section>
 
         <!-- Vision and Mission Section -->
@@ -112,7 +113,7 @@
                 </div>
                 <div>
                     <h4 class="text-xl font-bold text-green-700 mb-2">Our Mission</h4>
-                    <p class="text-gray-600">To meticulously curate and provide the safest, most scientifically advanced nutrition for infants and toddlers. We seek powerful collaborations with innovative suppliers who share our unwavering commitment to quality and transparency. <span class="font-semibold">Join us in this vital mission.</span></p>
+                    <p class="text-gray-600">To deliver safe, affordable, and scientifically advanced nutrition for infants and toddlers by partnering with trusted, committed, profitable, innovative suppliers. Together, we build strong, lasting collaborations that drive sustainable growth, thriving businesses, and achieve the shared goals.</p>
                 </div>
             </div>
         </section>
@@ -127,19 +128,19 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="supplier-name" class="block text-sm font-medium text-gray-600 mb-1">Supplier Name</label>
-                    <input type="text" id="supplier-name" name="Supplier Name" placeholder="e.g., Global Baby Care Inc." class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
+                    <input type="text" id="supplier-name" name="Supplier Name" placeholder="Enter supplier name" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
                 </div>
                 <div>
                     <label for="product-name" class="block text-sm font-medium text-gray-600 mb-1">Product Name / Brand</label>
-                    <input type="text" id="product-name" name="Product Name / Brand" placeholder="e.g., NutriGrow Formula" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
+                    <input type="text" id="product-name" name="Product Name / Brand" placeholder="Enter product or brand name" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
                 </div>
                 <div>
                     <label for="rep-name" class="block text-sm font-medium text-gray-600 mb-1">Representative Name</label>
-                    <input type="text" id="rep-name" name="Representative Name" placeholder="e.g., Jane Doe" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
+                    <input type="text" id="rep-name" name="Representative Name" placeholder="Enter representative's name" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
                 </div>
                 <div>
                     <label for="rep-position" class="block text-sm font-medium text-gray-600 mb-1">Representative Position</label>
-                    <input type="text" id="rep-position" name="Representative Position" placeholder="e.g., Key Account Manager" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
+                    <input type="text" id="rep-position" name="Representative Position" placeholder="Enter representative's position" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
                 </div>
                 <div class="md:col-span-2">
                     <label for="eval-date" class="block text-sm font-medium text-gray-600 mb-1">Evaluation Date</label>
@@ -154,9 +155,12 @@
                  <svg class="w-8 h-8 mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M12 8h.01M15 8h.01M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"></path></svg>
                 2. Evaluation Criteria
             </h3>
-            <p class="text-gray-500 mb-8 ml-11">Please rate your company's performance for each criterion on a scale of 1 to 10.</p>
+            <p class="text-gray-500 mb-8 ml-11">To build a powerful partnership, please rate your willingness to support each of the following criteria on a scale of 1 to 10.</p>
             
             <div id="evaluation-criteria" class="space-y-6"></div>
+            
+            <!-- Hidden fields for form submission -->
+            <input type="hidden" name="Evaluation Summary" id="evaluation-summary-input">
 
             <!-- Submit Button -->
             <div class="mt-10 pt-6 border-t border-gray-200 text-center">
@@ -175,22 +179,20 @@
         </footer>
     </div>
 
-    <!-- Results Modal is removed as it's no longer needed for the email submission flow -->
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const criteria = [
-                { id: 'promo', text: 'Promotional Activities & Trade Support', weight: 25, explanation: 'Rate your ability to create high-impact promotions, provide strong financial backing, and demonstrably increase overall category sales.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-2.236 9.168-5.584C18.35 0 18.68 0 19 0v12a5.002 5.002 0 01-5 5h-1.064M15 17l-4 4" /></svg>` },
-                { id: 'marketing', text: 'Marketing Support (In-store & Online)', weight: 20, explanation: 'Evaluate your excellence in creating engaging in-store displays, driving digital traffic, and executing effective shopper education campaigns.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>` },
-                { id: 'sales', text: 'Category Sales & Profitability Contribution', weight: 25, explanation: 'Assess your contribution to our mutual growth through strong sales, healthy profit margins, and a consistent positive year-over-year trend.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-3.75-.625m3.75.625V3.375" /></svg>` },
-                { id: 'partnership', text: 'Partnership & Long-term Relationship', weight: 15, explanation: 'Gauge your commitment to a true partnership through collaborative business planning, open data sharing, and alignment with our long-term strategic goals.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21a6 6 0 00-9-5.197m0 0A4.995 4.995 0 0012 12.5a4.995 4.995 0 00-3-1.354M12 12.5a4 4 0 110-5.292" /></svg>` },
-                { id: 'innovation', text: 'Innovation & FTM Launches', weight: 10, explanation: 'Score your pipeline of impactful new products and your ability to provide us with exclusive or first-to-market advantages that excite customers.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311l-3.75 0m3.75-7.478c.097-.57.097-1.156 0-1.726m0 0c.298-.678.648-1.32 1.04-1.908m-1.04 1.908c-.392-.588-.742-1.23-.1.04-1.908M12 18.75v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311l-3.75 0" /></svg>` },
-                { id: 'supply', text: 'Supply Reliability (SLAs)', weight: 5, explanation: 'Rate your operational excellence in consistently meeting delivery timelines, ensuring order accuracy, and preventing out-of-stock situations.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l2-2h8a1 1 0 001-1zM21 12v-2a1 1 0 00-1-1h-4a1 1 0 00-1 1v2m0 0h-4a2 2 0 00-2 2v2a2 2 0 002 2h4a2 2 0 002-2v-2z" /></svg>` }
+                { id: 'promo', text: 'Willingness for Promotional Activities & Trade Support', weight: 25, explanation: 'Rate your willingness to support high-impact promotions, provide strong financial backing, and develop strategies to increase overall category sales.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-2.236 9.168-5.584C18.35 0 18.68 0 19 0v12a5.002 5.002 0 01-5 5h-1.064M15 17l-4 4" /></svg>` },
+                { id: 'marketing', text: 'Willingness for Marketing Support (In-store & Online)', weight: 20, explanation: 'Assess your willingness to support engaging in-store displays, drive digital traffic to our platforms, and execute effective shopper education campaigns.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>` },
+                { id: 'sales', text: 'Commitment to Category Growth & Profitability', weight: 25, explanation: 'Evaluate your commitment to our mutual growth by proposing strategies for strong sales, healthy profit margins, and a consistent positive year-over-year trend.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-3.75-.625m3.75.625V3.375" /></svg>` },
+                { id: 'partnership', text: 'Willingness for Partnership & Long-term Relationship', weight: 15, explanation: 'Gauge your willingness to engage in collaborative business planning, share data openly, and align with our long-term strategic goals for a true partnership.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21a6 6 0 00-9-5.197m0 0A4.995 4.995 0 0012 12.5a4.995 4.995 0 00-3-1.354M12 12.5a4 4 0 110-5.292" /></svg>` },
+                { id: 'innovation', text: 'Commitment to Innovation & FTM Launches', weight: 10, explanation: 'Score your willingness to offer a pipeline of impactful new products and provide us with exclusive or first-to-market advantages that excite customers.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311l-3.75 0m3.75-7.478c.097-.57.097-1.156 0-1.726m0 0c.298-.678.648-1.32 1.04-1.908m-1.04 1.908c-.392-.588-.742-1.23-.1.04-1.908M12 18.75v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311l-3.75 0" /></svg>` },
+                { id: 'supply', text: 'Commitment to Supply Reliability (SLAs)', weight: 5, explanation: 'Rate your commitment to achieving operational excellence by consistently meeting delivery timelines, ensuring order accuracy, and preventing out-of-stock situations.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l2-2h8a1 1 0 001-1zM21 12v-2a1 1 0 00-1-1h-4a1 1 0 00-1 1v2m0 0h-4a2 2 0 00-2 2v2a2 2 0 002 2h4a2 2 0 002-2v-2z" /></svg>` }
             ];
 
-            const container = document.getElementById('evaluation-criteria');
+            const criteriaContainer = document.getElementById('evaluation-criteria');
+            
             criteria.forEach(item => {
-                // Added name="${item.text}" to the input range
                 const criterionHTML = `
                     <div class="p-4 rounded-lg hover:bg-gray-50/50 transition-colors border border-gray-200">
                         <div class="flex items-start mb-4">
@@ -202,7 +204,7 @@
                         </div>
                         <div class="grid grid-cols-12 gap-x-4 gap-y-2 items-center">
                             <div class="col-span-12 sm:col-span-7 md:col-span-8 flex items-center">
-                                <input type="range" id="${item.id}-rate" name="${item.text}" data-weight="${item.weight}" min="1" max="10" value="5" class="w-full supplier-rate mr-4">
+                                <input type="range" id="${item.id}-rate" data-weight="${item.weight}" min="1" max="10" value="5" class="w-full supplier-rate mr-4">
                                 <span id="${item.id}-value" class="w-8 text-center font-bold text-green-600 text-lg">5</span>
                             </div>
                             <div class="col-span-6 sm:col-span-2 md:col-span-2 text-center">
@@ -215,7 +217,7 @@
                             </div>
                         </div>
                     </div>`;
-                container.innerHTML += criterionHTML;
+                criteriaContainer.innerHTML += criterionHTML;
             });
 
             const sliders = document.querySelectorAll('.supplier-rate');
@@ -263,10 +265,19 @@
             form.addEventListener('submit', function(event) {
                 // Calculate the final score
                 const finalScore = calculateTotalScore();
-                // Set the value of the hidden input
                 document.getElementById('final-score-input').value = finalScore.toFixed(2);
-                
-                // The form will now submit with the final score included.
+
+                // Build the summary string
+                let summary = '';
+                criteria.forEach(item => {
+                    const slider = document.getElementById(`${item.id}-rate`);
+                    const rating = slider.value;
+                    const weightedScore = (rating / 10 * item.weight).toFixed(2);
+                    summary += `${item.text}: \n`;
+                    summary += `  - Rating: ${rating}/10 \n`;
+                    summary += `  - Weighted Score: ${weightedScore} \n\n`;
+                });
+                document.getElementById('evaluation-summary-input').value = summary;
             });
 
             // Fade-in animation for sections on scroll
