@@ -669,8 +669,18 @@
                 // Attach the generated PDF as a file for emailing
                 if (pdfBlob) {
                     try {
-                        // Use Blob directly for broader mobile compatibility
-                        formData.append('attachment', pdfBlob, pdfFilename || 'Supplier_Evaluation.pdf');
+                        const safeName = (pdfFilename || 'Supplier_Evaluation.pdf').replace(/[^\w\-.]+/g, '_');
+                        let pdfFile;
+                        try {
+                            // Prefer File to ensure proper filename and MIME on all browsers
+                            pdfFile = new File([pdfBlob], safeName, { type: 'application/pdf' });
+                        } catch {
+                            // Fallback if File constructor not supported
+                            pdfFile = pdfBlob;
+                        }
+                        formData.append('attachment', pdfFile, safeName);
+                        // Compatibility fallback: some setups expect attachment-1
+                        formData.append('attachment-1', pdfFile, safeName);
                     } catch (err) {
                         console.warn('Unable to attach PDF file to email submission:', err);
                     }
