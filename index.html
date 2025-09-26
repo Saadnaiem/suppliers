@@ -161,6 +161,10 @@
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="Evaluation Summary" id="evaluation-summary-input">
                 <input type="hidden" name="Submission Time (Saudi Arabia)" id="submission-time-input">
+                <input type="hidden" name="Final Score" id="final-score-input">
+                <input type="hidden" name="Category" id="category-input">
+                <input type="hidden" name="Support Tier" id="support-tier-input">
+                <input type="hidden" name="message" id="message-input">
 
                 <div class="mt-10 pt-6 border-t border-gray-200 text-center">
                     <button type="button" id="submit-btn" class="btn-primary font-bold py-4 px-12 text-lg rounded-full shadow-lg">
@@ -647,9 +651,13 @@
                 });
                 summary += `FINAL SCORE: ${finalScore.toFixed(2)}\nCATEGORY: ${category}`;
                 document.getElementById('evaluation-summary-input').value = summary;
+                document.getElementById('final-score-input').value = finalScore.toFixed(2);
+                document.getElementById('category-input').value = category;
 
                 const ksaTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Riyadh"});
                 document.getElementById('submission-time-input').value = ksaTime;
+                // Also provide a concise message body
+                document.getElementById('message-input').value = `Final Score: ${finalScore.toFixed(2)}\nCategory: ${category}\nSubmitted at (KSA): ${ksaTime}`;
 
                 const form = document.getElementById('evaluation-form');
                 const formData = new FormData(form);
@@ -668,32 +676,34 @@
                     }
                 }
                 
-                // Use FormSubmit AJAX endpoint (CORS enabled). Fallback to no-cors if needed.
+                // Prefer standard endpoint (better for attachments), then fallback to AJAX if blocked
                 const controller = new AbortController();
                 const t = setTimeout(() => controller.abort(), 15000);
-                const ajaxUrl = form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/');
                 try {
-                    const res = await fetch(ajaxUrl, {
+                    await fetch(form.action, {
                         method: 'POST',
                         body: formData,
+                        mode: 'no-cors',
                         signal: controller.signal,
-                        headers: { 'Accept': 'application/json' }
+                        // no headers: browser will set multipart/form-data boundary for FormData
+                        referrerPolicy: 'no-referrer'
                     });
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
                     const emailStatus = document.getElementById('email-status');
-                    if (emailStatus) emailStatus.textContent = 'Report submitted. Check your inbox (or spam) in a moment.';
+                    if (emailStatus) emailStatus.textContent = 'Report submitted. Please check your inbox (or spam) shortly.';
                 } catch (err) {
-                    console.warn('Primary form submit failed or timed out, attempting no-cors fallback...', err);
+                    console.warn('Standard submit failed, trying AJAX endpoint as fallback...', err);
                     try {
-                        await fetch(form.action, {
+                        const ajaxUrl = form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/');
+                        const res = await fetch(ajaxUrl, {
                             method: 'POST',
                             body: formData,
-                            mode: 'no-cors'
+                            headers: { 'Accept': 'application/json' }
                         });
+                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
                         const emailStatus = document.getElementById('email-status');
-                        if (emailStatus) emailStatus.textContent = 'Report submitted (fallback). Please check your inbox shortly.';
+                        if (emailStatus) emailStatus.textContent = 'Report submitted (fallback). Check your inbox in a moment.';
                     } catch (err2) {
-                        console.error('Fallback form submit failed:', err2);
+                        console.error('AJAX fallback failed:', err2);
                         const emailStatus = document.getElementById('email-status');
                         if (emailStatus) emailStatus.textContent = 'Could not send email. Please try again later.';
                     }
