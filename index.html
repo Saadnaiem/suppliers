@@ -123,26 +123,27 @@
                 <svg class="w-8 h-8 mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                 1. Supplier Information
             </h3>
+            <form id="evaluation-form" action="https://formsubmit.co/saad.naiem@gmail.com" method="POST">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="supplier-name" class="block text-sm font-medium text-gray-600 mb-1">Supplier Name</label>
-                    <input type="text" id="supplier-name" placeholder="e.g., Global Baby Care Inc." class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                    <input type="text" id="supplier-name" name="Supplier Name" placeholder="e.g., Global Baby Care Inc." class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
                 </div>
                 <div>
                     <label for="product-name" class="block text-sm font-medium text-gray-600 mb-1">Product Name / Brand</label>
-                    <input type="text" id="product-name" placeholder="e.g., NutriGrow Formula" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                    <input type="text" id="product-name" name="Product Name / Brand" placeholder="e.g., NutriGrow Formula" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
                 </div>
                 <div>
                     <label for="rep-name" class="block text-sm font-medium text-gray-600 mb-1">Representative Name</label>
-                    <input type="text" id="rep-name" placeholder="e.g., Jane Doe" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                    <input type="text" id="rep-name" name="Representative Name" placeholder="e.g., Jane Doe" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
                 </div>
                 <div>
                     <label for="rep-position" class="block text-sm font-medium text-gray-600 mb-1">Representative Position</label>
-                    <input type="text" id="rep-position" placeholder="e.g., Key Account Manager" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                    <input type="text" id="rep-position" name="Representative Position" placeholder="e.g., Key Account Manager" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
                 </div>
                 <div class="md:col-span-2">
                     <label for="eval-date" class="block text-sm font-medium text-gray-600 mb-1">Evaluation Date</label>
-                    <input type="date" id="eval-date" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition">
+                    <input type="date" id="eval-date" name="Evaluation Date" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" required>
                 </div>
             </div>
         </section>
@@ -159,11 +160,14 @@
 
             <!-- Submit Button -->
             <div class="mt-10 pt-6 border-t border-gray-200 text-center">
-                <button id="submit-btn" class="btn-primary font-bold py-4 px-12 text-lg rounded-full shadow-lg">
-                    Calculate Score & Download Report
+                <input type="hidden" name="_subject" value="New Supplier Evaluation Submission!">
+                <input type="hidden" name="Final Score" id="final-score">
+                <button type="submit" id="submit-btn" class="btn-primary font-bold py-4 px-12 text-lg rounded-full shadow-lg">
+                    Submit Evaluation
                 </button>
             </div>
         </main>
+        </form>
         
         <footer class="text-center mt-10 text-gray-400 text-sm section-fade-in">
             <p>&copy; Al Habib Pharmacy. All Rights Reserved.</p>
