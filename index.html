@@ -161,7 +161,7 @@
             <!-- Submit Button -->
             <div class="mt-10 pt-6 border-t border-gray-200 text-center">
                 <input type="hidden" name="_subject" value="New Supplier Evaluation Submission!">
-                <input type="hidden" name="Final Score" id="final-score">
+                <input type="hidden" name="Final Score" id="final-score-input">
                 <button type="submit" id="submit-btn" class="btn-primary font-bold py-4 px-12 text-lg rounded-full shadow-lg">
                     Submit Evaluation
                 </button>
@@ -175,20 +175,7 @@
         </footer>
     </div>
 
-    <!-- Results Modal -->
-    <div id="results-modal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none">
-        <div id="modal-content" class="modal-gradient rounded-2xl shadow-2xl p-8 max-w-md w-full text-center transform scale-95 transition-all duration-300">
-            <div id="modal-icon" class="mx-auto mb-4"></div>
-            <h2 id="modal-title" class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Evaluation Complete!</h2>
-            <p class="text-gray-500 mb-4">Your final collaboration score is:</p>
-            <p id="modal-score" class="text-6xl sm:text-7xl font-extrabold mb-4"></p>
-            <div class="w-full bg-white/50 rounded-full h-5 mb-4 shadow-inner">
-                <div id="modal-progress-bar" class="bg-gradient-to-r from-green-400 to-emerald-600 h-5 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
-            </div>
-            <p id="modal-message" class="text-lg font-medium text-gray-600 mb-6"></p>
-            <button id="close-modal-btn" class="bg-white text-gray-700 font-bold py-2 px-6 rounded-full hover:bg-gray-100 transition shadow-md">Close</button>
-        </div>
-    </div>
+    <!-- Results Modal is removed as it's no longer needed for the email submission flow -->
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -203,6 +190,7 @@
 
             const container = document.getElementById('evaluation-criteria');
             criteria.forEach(item => {
+                // Added name="${item.text}" to the input range
                 const criterionHTML = `
                     <div class="p-4 rounded-lg hover:bg-gray-50/50 transition-colors border border-gray-200">
                         <div class="flex items-start mb-4">
@@ -214,7 +202,7 @@
                         </div>
                         <div class="grid grid-cols-12 gap-x-4 gap-y-2 items-center">
                             <div class="col-span-12 sm:col-span-7 md:col-span-8 flex items-center">
-                                <input type="range" id="${item.id}-rate" data-weight="${item.weight}" min="1" max="10" value="5" class="w-full supplier-rate mr-4">
+                                <input type="range" id="${item.id}-rate" name="${item.text}" data-weight="${item.weight}" min="1" max="10" value="5" class="w-full supplier-rate mr-4">
                                 <span id="${item.id}-value" class="w-8 text-center font-bold text-green-600 text-lg">5</span>
                             </div>
                             <div class="col-span-6 sm:col-span-2 md:col-span-2 text-center">
@@ -270,106 +258,15 @@
 
             updateScores(); // Initial call to set scores and slider fills on load
 
-            // Modal and Submission Logic
-            const submitBtn = document.getElementById('submit-btn');
-            const modal = document.getElementById('results-modal');
-            const modalContent = document.getElementById('modal-content');
-            const closeModalBtn = document.getElementById('close-modal-btn');
-
-            submitBtn.addEventListener('click', () => {
-                const supplierInfo = {
-                    supplierName: document.getElementById('supplier-name').value,
-                    productName: document.getElementById('product-name').value,
-                    repName: document.getElementById('rep-name').value,
-                    repPosition: document.getElementById('rep-position').value,
-                    evalDate: document.getElementById('eval-date').value
-                };
-
-                if (!supplierInfo.supplierName || !supplierInfo.productName || !supplierInfo.repName || !supplierInfo.repPosition || !supplierInfo.evalDate) {
-                    alert('Please fill out all supplier information fields before submitting.');
-                    return;
-                }
-
+            // Form submission logic
+            const form = document.getElementById('evaluation-form');
+            form.addEventListener('submit', function(event) {
+                // Calculate the final score
                 const finalScore = calculateTotalScore();
-                let csvContent = "data:text/csv;charset=utf-8,";
-                const headers = ["Evaluation Date", "Supplier Name", "Product Name", "Representative Name", "Representative Position", "Criterion", "Weight (%)", "Supplier Rate (1-10)", "Weighted Score", "Final Score"];
-                csvContent += headers.join(",") + "\r\n";
+                // Set the value of the hidden input
+                document.getElementById('final-score-input').value = finalScore.toFixed(2);
                 
-                let firstRow = true;
-                criteria.forEach(item => {
-                    const rate = document.getElementById(`${item.id}-rate`).value;
-                    const score = (rate / 10 * item.weight).toFixed(2);
-                    const row = [
-                        supplierInfo.evalDate,
-                        `"${supplierInfo.supplierName}"`,
-                        `"${supplierInfo.productName}"`,
-                        `"${supplierInfo.repName}"`,
-                        `"${supplierInfo.repPosition}"`,
-                        `"${item.text}"`,
-                        item.weight,
-                        rate,
-                        score,
-                        firstRow ? finalScore.toFixed(2) : '' // Only add final score to the first data row
-                    ];
-                    csvContent += row.join(",") + "\r\n";
-                    firstRow = false;
-                });
-
-                const encodedUri = encodeURI(csvContent);
-                const link = document.createElement("a");
-                link.setAttribute("href", encodedUri);
-                link.setAttribute("download", `Supplier_Evaluation_${supplierInfo.supplierName.replace(/[\s,]+/g, '_')}_${supplierInfo.evalDate}.csv`);
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                showResultsModal(finalScore);
-            });
-
-            function showResultsModal(score) {
-                const modalIcon = document.getElementById('modal-icon');
-                const modalScore = document.getElementById('modal-score');
-                const modalMessage = document.getElementById('modal-message');
-                const modalProgressBar = document.getElementById('modal-progress-bar');
-                
-                modalScore.textContent = score.toFixed(2);
-                
-                setTimeout(() => {
-                   modalProgressBar.style.width = `${score}%`;
-                }, 100);
-
-                let iconHtml = '';
-                let message = '';
-                let colorClass = '';
-
-                if (score >= 90) {
-                    iconHtml = `<svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-yellow-400 mx-auto" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>`;
-                    message = "Outstanding Performance! You are a Gold-tier partner.";
-                    colorClass = 'text-yellow-500';
-                } else if (score >= 75) {
-                    iconHtml = `<svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-gray-400 mx-auto" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>`;
-                    message = "Excellent Work! You are a Silver-tier partner.";
-                    colorClass = 'text-gray-500';
-                } else if (score >= 60) {
-                     iconHtml = `<svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-orange-400 mx-auto" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>`;
-                    message = "Solid Contribution! You are a Bronze-tier partner.";
-                    colorClass = 'text-orange-500';
-                } else {
-                     iconHtml = `<svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-gray-600 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
-                    message = "Thank you for your submission. We appreciate your partnership.";
-                    colorClass = 'text-gray-700';
-                }
-                modalIcon.innerHTML = iconHtml;
-                modalScore.className = `text-6xl sm:text-7xl font-extrabold mb-4 ${colorClass}`;
-                modalMessage.textContent = message;
-
-                modal.classList.remove('opacity-0', 'pointer-events-none');
-                modalContent.classList.remove('scale-95');
-            }
-
-            closeModalBtn.addEventListener('click', () => {
-                modal.classList.add('opacity-0', 'pointer-events-none');
-                modalContent.classList.add('scale-95');
+                // The form will now submit with the final score included.
             });
 
             // Fade-in animation for sections on scroll
