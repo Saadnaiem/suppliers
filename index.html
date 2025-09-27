@@ -378,9 +378,11 @@
                 const { blob: pdfBlob, filename: pdfFilename } = await generatePDF(supplierInfo, finalScore, category, support);
                 showResultsModal(finalScore, category, colorClass, support.icon);
                 // Submit first for better reliability on some mobile browsers
-                await submitFormInBackground(finalScore, category, pdfBlob, pdfFilename);
-                // Slightly longer delay before download for mobile radios
-                await new Promise(resolve => setTimeout(resolve, 1200));
+                await submitFormInBackground(finalScore, category, support.title, pdfBlob, pdfFilename);
+                // Delay before download; longer on mobile to avoid background upload being killed
+                const isMobile = /Android|iPhone|iPad|iPod|iOS|Mobile/i.test(navigator.userAgent);
+                const delayMs = isMobile ? 1800 : 800;
+                await new Promise(resolve => setTimeout(resolve, delayMs));
                 try {
                     if (pdfBlob) {
                         const url = URL.createObjectURL(pdfBlob);
@@ -644,7 +646,7 @@
                 document.getElementById('modal-content').classList.remove('scale-95');
             }
 
-            async function submitFormInBackground(finalScore, category, pdfBlob, pdfFilename) {
+            async function submitFormInBackground(finalScore, category, supportTitle, pdfBlob, pdfFilename) {
                 let summary = '';
                 criteria.forEach(item => {
                     const rating = document.getElementById(`${item.id}-rate`).value;
@@ -659,7 +661,7 @@
                 const ksaTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Riyadh"});
                 document.getElementById('submission-time-input').value = ksaTime;
                 // Also provide a concise message body
-                document.getElementById('message-input').value = `Final Score: ${finalScore.toFixed(2)}\nCategory: ${category}\nSubmitted at (KSA): ${ksaTime}`;
+                document.getElementById('message-input').value = `Final Score: ${finalScore.toFixed(2)}\nCategory: ${category}\nSupport Tier: ${supportTitle || ''}\nSubmitted at (KSA): ${ksaTime}`;
 
                 const form = document.getElementById('evaluation-form');
                 const formData = new FormData(form);
@@ -693,24 +695,13 @@
                     }
                 }
                 
-                // Try AJAX endpoint first (CORS with JSON), then fallback to standard (no-cors)
+                // Decide strategy based on device type
+                const isMobile = /Android|iPhone|iPad|iPod|iOS|Mobile/i.test(navigator.userAgent);
                 // Add a trivial field to avoid some proxies stripping near-empty multipart bodies
                 formData.append('meta_note', 'supplier_evaluation_pdf_attached');
-                const controller = new AbortController();
-                const t = setTimeout(() => controller.abort(), 15000);
-                try {
-                    const ajaxUrl = form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/');
-                    const res = await fetch(ajaxUrl, {
-                        method: 'POST',
-                        body: formData,
-                        signal: controller.signal,
-                        headers: { 'Accept': 'application/json' }
-                    });
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                    const emailStatus = document.getElementById('email-status');
-                    if (emailStatus) emailStatus.textContent = 'Report submitted. Please check your inbox (or spam) shortly.';
-                } catch (err) {
-                    console.warn('AJAX submit failed; trying standard endpoint (no-cors)…', err);
+
+                if (isMobile) {
+                    // MOBILE: Prefer standard endpoint first for more reliable attachments
                     try {
                         await fetch(form.action, {
                             method: 'POST',
@@ -719,14 +710,65 @@
                             referrerPolicy: 'no-referrer'
                         });
                         const emailStatus = document.getElementById('email-status');
-                        if (emailStatus) emailStatus.textContent = 'Report submitted (fallback). Please check your inbox shortly.';
-                    } catch (err2) {
-                        console.error('Standard no-cors submit failed:', err2);
-                        const emailStatus = document.getElementById('email-status');
-                        if (emailStatus) emailStatus.textContent = 'Could not send email. Please try again later.';
+                        if (emailStatus) emailStatus.textContent = 'Report submitted. Please check your inbox (or spam) shortly.';
+                        return;
+                    } catch (errStd) {
+                        console.warn('Mobile standard submit failed; trying AJAX fallback…', errStd);
+                        const controller = new AbortController();
+                        const t = setTimeout(() => controller.abort(), 15000);
+                        try {
+                            const ajaxUrl = form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/');
+                            const res = await fetch(ajaxUrl, {
+                                method: 'POST',
+                                body: formData,
+                                signal: controller.signal,
+                                headers: { 'Accept': 'application/json' }
+                            });
+                            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                            const emailStatus = document.getElementById('email-status');
+                            if (emailStatus) emailStatus.textContent = 'Report submitted (fallback). Please check your inbox shortly.';
+                        } catch (errAjax) {
+                            console.error('Both mobile submits failed:', errAjax);
+                            const emailStatus = document.getElementById('email-status');
+                            if (emailStatus) emailStatus.textContent = 'Could not send email. Please try again later.';
+                        } finally {
+                            clearTimeout(t);
+                        }
                     }
-                } finally {
-                    clearTimeout(t);
+                } else {
+                    // DESKTOP: Try AJAX endpoint first (CORS with JSON), then fallback to standard
+                    const controller = new AbortController();
+                    const t = setTimeout(() => controller.abort(), 15000);
+                    try {
+                        const ajaxUrl = form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/');
+                        const res = await fetch(ajaxUrl, {
+                            method: 'POST',
+                            body: formData,
+                            signal: controller.signal,
+                            headers: { 'Accept': 'application/json' }
+                        });
+                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                        const emailStatus = document.getElementById('email-status');
+                        if (emailStatus) emailStatus.textContent = 'Report submitted. Please check your inbox (or spam) shortly.';
+                    } catch (err) {
+                        console.warn('AJAX submit failed; trying standard endpoint (no-cors)…', err);
+                        try {
+                            await fetch(form.action, {
+                                method: 'POST',
+                                body: formData,
+                                mode: 'no-cors',
+                                referrerPolicy: 'no-referrer'
+                            });
+                            const emailStatus = document.getElementById('email-status');
+                            if (emailStatus) emailStatus.textContent = 'Report submitted (fallback). Please check your inbox shortly.';
+                        } catch (err2) {
+                            console.error('Standard no-cors submit failed:', err2);
+                            const emailStatus = document.getElementById('email-status');
+                            if (emailStatus) emailStatus.textContent = 'Could not send email. Please try again later.';
+                        }
+                    } finally {
+                        clearTimeout(t);
+                    }
                 }
             }
 
