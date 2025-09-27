@@ -189,7 +189,8 @@
             <div class="w-full bg-white/50 rounded-full h-5 mb-4 shadow-inner">
                 <div id="modal-progress-bar" class="bg-gradient-to-r from-green-400 to-emerald-600 h-5 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
             </div>
-            <p id="modal-message" class="text-lg font-medium text-gray-600 mb-6"></p>
+            <p id="modal-message" class="text-lg font-medium text-gray-600 mb-2"></p>
+            <p id="modal-category" class="text-2xl sm:text-3xl font-extrabold mb-6"></p>
             <p id="email-status" class="text-sm text-gray-500 mb-4"></p>
             <button id="close-modal-btn" class="bg-white text-gray-700 font-bold py-2 px-6 rounded-full hover:bg-gray-100 transition shadow-md">Close</button>
         </div>
@@ -359,11 +360,11 @@
                 if (finalScore >= 90) {
                     category = 'Strategic Partner';
                     support = supportTiers.strategic;
-                    colorClass = 'text-blue-700';
+                    colorClass = 'text-blue-600';
                 } else if (finalScore >= 75) {
                     category = 'Preferred Partner';
                     support = supportTiers.preferred;
-                    colorClass = 'text-green-700';
+                    colorClass = 'text-green-600';
                 } else if (finalScore >= 60) {
                     category = 'Developing Partner';
                     support = supportTiers.developing;
@@ -371,7 +372,7 @@
                 } else {
                     category = 'Potential Partner';
                     support = supportTiers.potential;
-                    colorClass = 'text-gray-800';
+                    colorClass = 'text-gray-600';
                 }
 
                 // Generate the PDF, show modal, and submit summary in background
@@ -636,8 +637,13 @@
                 document.getElementById('modal-score').textContent = score.toFixed(2);
                 document.getElementById('modal-score').className = `text-6xl sm:text-7xl font-extrabold mb-4 ${colorClass}`;
                 const msg = document.getElementById('modal-message');
-                msg.textContent = `Congratulations! You are classified as a ${category}.`;
-                msg.className = `text-lg font-semibold mb-6 ${colorClass}`;
+                msg.textContent = 'You are classified as:';
+                msg.className = 'text-lg font-medium text-gray-600 mb-2';
+                const catEl = document.getElementById('modal-category');
+                if (catEl) {
+                    catEl.textContent = category;
+                    catEl.className = `text-2xl sm:text-3xl font-extrabold mb-6 ${colorClass}`;
+                }
                 document.getElementById('modal-progress-bar').style.width = `${score}%`;
                 const emailStatus = document.getElementById('email-status');
                 if (emailStatus) emailStatus.textContent = 'Sending the report to your email…';
