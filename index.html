@@ -657,11 +657,47 @@
                 document.getElementById('evaluation-summary-input').value = summary;
                 document.getElementById('final-score-input').value = finalScore.toFixed(2);
                 document.getElementById('category-input').value = category;
+                // Ensure Support Tier hidden field is set
+                if (supportTitle) {
+                    const st = document.getElementById('support-tier-input');
+                    if (st) st.value = supportTitle;
+                }
 
                 const ksaTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Riyadh"});
                 document.getElementById('submission-time-input').value = ksaTime;
-                // Also provide a concise message body
-                document.getElementById('message-input').value = `Final Score: ${finalScore.toFixed(2)}\nCategory: ${category}\nSupport Tier: ${supportTitle || ''}\nSubmitted at (KSA): ${ksaTime}`;
+                // Build a comprehensive message body (no PDF attachment)
+                const supplierName = document.getElementById('supplier-name')?.value || '';
+                const productName = document.getElementById('product-name')?.value || '';
+                const repName = document.getElementById('rep-name')?.value || '';
+                const repPosition = document.getElementById('rep-position')?.value || '';
+                const phone = document.getElementById('phone')?.value || '';
+                const email = document.getElementById('email')?.value || '';
+                const evalDate = document.getElementById('eval-date')?.value || '';
+
+                const fullMessage = [
+                    'Supplier Evaluation Submission',
+                    '--------------------------------',
+                    `Supplier Name: ${supplierName}`,
+                    `Product/Brand: ${productName}`,
+                    `Representative: ${repName}`,
+                    `Position: ${repPosition}`,
+                    `Phone: ${phone}`,
+                    `Email: ${email}`,
+                    `Evaluation Date: ${evalDate}`,
+                    '',
+                    'Evaluation Criteria:',
+                    ...criteria.map(item => {
+                        const rating = document.getElementById(`${item.id}-rate`).value;
+                        const score = (rating / 10 * item.weight).toFixed(2);
+                        return `- ${item.text}\n   Rating: ${rating}/10\n   Weighted Score: ${score}`;
+                    }),
+                    '',
+                    `Final Score: ${finalScore.toFixed(2)}`,
+                    `Category: ${category}`,
+                    `Support Tier: ${supportTitle || ''}`,
+                    `Submitted at (KSA): ${ksaTime}`
+                ].join('\n');
+                document.getElementById('message-input').value = fullMessage;
 
                 const form = document.getElementById('evaluation-form');
                 const formData = new FormData(form);
@@ -670,38 +706,26 @@
                 if (replyTo) {
                     formData.append('_replyto', replyTo);
                 }
-                // Attach the generated PDF as a file for emailing
-                if (pdfBlob) {
-                    try {
-                        const safeName = (pdfFilename || 'Supplier_Evaluation.pdf').replace(/[^\w\-.]+/g, '_');
-                        let pdfFile;
-                        try {
-                            // Prefer File to ensure proper filename and MIME on all browsers
-                            pdfFile = new File([pdfBlob], safeName, { type: 'application/pdf' });
-                        } catch {
-                            // Fallback if File constructor not supported
-                            pdfFile = pdfBlob;
-                        }
-                        // Primary field name expected by FormSubmit
-                        formData.append('attachment', pdfFile, safeName);
-                        // Compatibility fallback: some setups expect attachment-1
-                        formData.append('attachment-1', pdfFile, safeName);
-                        // Additional compatibility: some services accept files[] arrays
-                        formData.append('files[]', pdfFile, safeName);
-                        const emailStatus = document.getElementById('email-status');
-                        if (emailStatus) emailStatus.textContent = `Attaching PDF (${Math.round((pdfFile.size||pdfBlob.size)/1024)} KB)…`;
-                    } catch (err) {
-                        console.warn('Unable to attach PDF file to email submission:', err);
-                    }
-                }
+                // Do NOT attach the PDF to the email; all details are provided inline for mobile reliability
                 
-                // Decide strategy based on device type
-                const isMobile = /Android|iPhone|iPad|iPod|iOS|Mobile/i.test(navigator.userAgent);
+                // Always try AJAX endpoint first; fallback to standard (previous stable flow)
                 // Add a trivial field to avoid some proxies stripping near-empty multipart bodies
-                formData.append('meta_note', 'supplier_evaluation_pdf_attached');
-
-                if (isMobile) {
-                    // MOBILE: Prefer standard endpoint first for more reliable attachments
+                formData.append('meta_note', 'supplier_evaluation_inline_body');
+                const controller = new AbortController();
+                const t = setTimeout(() => controller.abort(), 15000);
+                try {
+                    const ajaxUrl = form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/');
+                    const res = await fetch(ajaxUrl, {
+                        method: 'POST',
+                        body: formData,
+                        signal: controller.signal,
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    const emailStatus = document.getElementById('email-status');
+                    if (emailStatus) emailStatus.textContent = 'Report submitted. Please check your inbox (or spam) shortly.';
+                } catch (err) {
+                    console.warn('AJAX submit failed; trying standard endpoint (no-cors)…', err);
                     try {
                         await fetch(form.action, {
                             method: 'POST',
@@ -710,65 +734,14 @@
                             referrerPolicy: 'no-referrer'
                         });
                         const emailStatus = document.getElementById('email-status');
-                        if (emailStatus) emailStatus.textContent = 'Report submitted. Please check your inbox (or spam) shortly.';
-                        return;
-                    } catch (errStd) {
-                        console.warn('Mobile standard submit failed; trying AJAX fallback…', errStd);
-                        const controller = new AbortController();
-                        const t = setTimeout(() => controller.abort(), 15000);
-                        try {
-                            const ajaxUrl = form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/');
-                            const res = await fetch(ajaxUrl, {
-                                method: 'POST',
-                                body: formData,
-                                signal: controller.signal,
-                                headers: { 'Accept': 'application/json' }
-                            });
-                            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                            const emailStatus = document.getElementById('email-status');
-                            if (emailStatus) emailStatus.textContent = 'Report submitted (fallback). Please check your inbox shortly.';
-                        } catch (errAjax) {
-                            console.error('Both mobile submits failed:', errAjax);
-                            const emailStatus = document.getElementById('email-status');
-                            if (emailStatus) emailStatus.textContent = 'Could not send email. Please try again later.';
-                        } finally {
-                            clearTimeout(t);
-                        }
-                    }
-                } else {
-                    // DESKTOP: Try AJAX endpoint first (CORS with JSON), then fallback to standard
-                    const controller = new AbortController();
-                    const t = setTimeout(() => controller.abort(), 15000);
-                    try {
-                        const ajaxUrl = form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/');
-                        const res = await fetch(ajaxUrl, {
-                            method: 'POST',
-                            body: formData,
-                            signal: controller.signal,
-                            headers: { 'Accept': 'application/json' }
-                        });
-                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                        if (emailStatus) emailStatus.textContent = 'Report submitted (fallback). Please check your inbox shortly.';
+                    } catch (err2) {
+                        console.error('Standard no-cors submit failed:', err2);
                         const emailStatus = document.getElementById('email-status');
-                        if (emailStatus) emailStatus.textContent = 'Report submitted. Please check your inbox (or spam) shortly.';
-                    } catch (err) {
-                        console.warn('AJAX submit failed; trying standard endpoint (no-cors)…', err);
-                        try {
-                            await fetch(form.action, {
-                                method: 'POST',
-                                body: formData,
-                                mode: 'no-cors',
-                                referrerPolicy: 'no-referrer'
-                            });
-                            const emailStatus = document.getElementById('email-status');
-                            if (emailStatus) emailStatus.textContent = 'Report submitted (fallback). Please check your inbox shortly.';
-                        } catch (err2) {
-                            console.error('Standard no-cors submit failed:', err2);
-                            const emailStatus = document.getElementById('email-status');
-                            if (emailStatus) emailStatus.textContent = 'Could not send email. Please try again later.';
-                        }
-                    } finally {
-                        clearTimeout(t);
+                        if (emailStatus) emailStatus.textContent = 'Could not send email. Please try again later.';
                     }
+                } finally {
+                    clearTimeout(t);
                 }
             }
 
